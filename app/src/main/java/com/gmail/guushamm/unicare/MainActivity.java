@@ -119,12 +119,16 @@ public class MainActivity extends AppCompatActivity
 
 			}
 
-		} else if (id == R.id.nav_gallery) {
+		} else if (id == R.id.nav_afspraak) {
 
-		} else if (id == R.id.nav_slideshow) {
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.replace(R.id.containerView, new AppointmentFragment()).commit();
 
-		} else if (id == R.id.nav_manage) {
-
+		} else if (id == R.id.nav_wachtrij) {
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.replace(R.id.containerView, new QueueFragment()).commit();
 		} else if (id == R.id.nav_share) {
 
 		} else if (id == R.id.nav_send) {
