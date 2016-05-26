@@ -151,7 +151,7 @@ public class MainActivity extends AppCompatActivity
 
 					endTime.setTime(new Date(beginTime.getTimeInMillis() + (qrCode.getInt("duration") * ONE_MINUTE_IN_MILLIS)));
 
-					String title = String.format("Appointment with %s", qrCode.getString("doctor"));
+					String title = String.format("Afspraak met %s", qrCode.getString("doctor"));
 
 					String location = qrCode.getString("location");
 
