@@ -28,8 +28,6 @@ import java.util.Date;
 public class MainActivity extends AppCompatActivity
 		implements NavigationView.OnNavigationItemSelectedListener {
 
-
-
 	FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
 
@@ -39,8 +37,6 @@ public class MainActivity extends AppCompatActivity
 		setContentView(R.layout.activity_main);
 		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
-
-
 
 		DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 		ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -63,6 +59,7 @@ public class MainActivity extends AppCompatActivity
 		if (drawer.isDrawerOpen(GravityCompat.START)) {
 			drawer.closeDrawer(GravityCompat.START);
 		} else {
+
 			super.onBackPressed();
 		}
 	}
@@ -95,10 +92,7 @@ public class MainActivity extends AppCompatActivity
 		// Handle navigation view item clicks here.
 		int id = item.getItemId();
 
-		if (id == R.id.nav_camera) {
-
-
-		} else if (id == R.id.nav_afspraak) {
+		if (id == R.id.nav_afspraak) {
 
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.addToBackStack(null);
@@ -115,7 +109,16 @@ public class MainActivity extends AppCompatActivity
 		}
 
 		DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-		drawer.closeDrawer(GravityCompat.START);
+
+
+		// Highlight the selected item has been done by NavigationView
+		item.setChecked(true);
+		// Set action bar title
+		setTitle(item.getTitle());
+		// Close the navigation drawer
+		drawer.closeDrawers();
+
+
 		return true;
 	}
 
