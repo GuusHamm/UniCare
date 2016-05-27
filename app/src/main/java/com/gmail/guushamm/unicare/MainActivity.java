@@ -40,14 +40,7 @@ public class MainActivity extends AppCompatActivity
 		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
 
-		//FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-		//fab.setOnClickListener(new View.OnClickListener() {
-		//	@Override
-		//	public void onClick(View view) {
-		//		Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-		//				.setAction("Action", null).show();
-		//	}
-		//});
+
 
 		DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 		ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -103,21 +96,7 @@ public class MainActivity extends AppCompatActivity
 		int id = item.getItemId();
 
 		if (id == R.id.nav_camera) {
-			// Handle the camera action
-			try {
 
-				Intent intent = new Intent("com.google.zxing.client.android.SCAN");
-				intent.putExtra("SCAN_MODE", "QR_CODE_MODE"); // "PRODUCT_MODE for bar codes
-
-				startActivityForResult(intent, 0);
-
-			} catch (Exception e) {
-
-				Uri marketUri = Uri.parse("market://details?id=com.google.zxing.client.android");
-				Intent marketIntent = new Intent(Intent.ACTION_VIEW, marketUri);
-				startActivity(marketIntent);
-
-			}
 
 		} else if (id == R.id.nav_afspraak) {
 
