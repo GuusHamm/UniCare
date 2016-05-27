@@ -5,9 +5,10 @@
     tools:context="com.gmail.guushamm.unicare.QueueFragment">
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Wachtrij Fragment/Layout"
-        android:textSize="25dp" />
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Wachtrij Fragment/Layout"
+            android:textSize="25dp"
+            android:id="@+id/QueueTextView"/>
 
 </FrameLayout>
