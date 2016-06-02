@@ -101,6 +101,10 @@ public class MainActivity extends AppCompatActivity
 			Address origin = new Address("kerkstraat", "5", "Casteren");
 			Address destination = new Address("De Run", "4600", "Veldhoven");
 			openGoogleMaps(origin, destination);
+
+			//Testing
+			Address test = new Address(origin.toJson());
+			System.out.println("breakpoint test");
 		} else if (id == R.id.nav_share) {
 
 		} else if (id == R.id.nav_send) {
@@ -122,12 +126,26 @@ public class MainActivity extends AppCompatActivity
 	}
 
 	public void openGoogleMaps(Address origin, Address destination) {
+		GPSTracker gps = new GPSTracker(this);
+		double lat = 0.0;
+		double longitute = 0.0;
+		if (gps.canGetLocation()) {
+			lat = gps.getLatitude();
+			longitute = gps.getLongitude();
+		} else {
+			gps.showSettingsAlert();
+		}
 
-		String googleMapsString = "http://maps.google.com/maps?saddr=ORIGINSTREET+ORIGINNUMBER+ORIGINCITY&daddr=DESSTREET+DESNUMBER+DESCITY";
+		String googleMapsString = "http://maps.google.com/maps?saddr=LATITUDE,LONGITUDE&daddr=DESSTREET+DESNUMBER+DESCITY";
+//		String googleMapsString = "http://maps.google.com/maps?saddr=ORIGINSTREET+ORIGINNUMBER+ORIGINCITY&daddr=DESSTREET+DESNUMBER+DESCITY";
+//
+//		googleMapsString = googleMapsString.replace("ORIGINSTREET", origin.getStreet());
+//		googleMapsString = googleMapsString.replace("ORIGINNUMBER", origin.getNumber());
+//		googleMapsString = googleMapsString.replace("ORIGINCITY", origin.getCity());
+		googleMapsString = googleMapsString.replace("LATITUDE", String.valueOf(lat));
+		googleMapsString = googleMapsString.replace("LONGITUDE", String.valueOf(longitute));
 
-		googleMapsString = googleMapsString.replace("ORIGINSTREET", origin.getStreet());
-		googleMapsString = googleMapsString.replace("ORIGINNUMBER", origin.getNumber());
-		googleMapsString = googleMapsString.replace("ORIGINCITY", origin.getCity());
+
 		//Destination
 		googleMapsString = googleMapsString.replace("DESSTREET", destination.getStreet());
 		googleMapsString = googleMapsString.replace("DESNUMBER", destination.getNumber());
