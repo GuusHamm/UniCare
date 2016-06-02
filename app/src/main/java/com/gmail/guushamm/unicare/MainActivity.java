@@ -85,20 +85,17 @@ public class MainActivity extends AppCompatActivity
 		// Handle navigation view item clicks here.
 		int id = item.getItemId();
 
-		if (id == R.id.nav_afspraak) {
+		FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+		fragmentTransaction.addToBackStack(null);
 
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.addToBackStack(null);
+		if (id == R.id.nav_home)
+		{
+			fragmentTransaction.replace(R.id.containerView, new HomeFragment()).commit();
+		} else if(id == R.id.nav_afspraak) {
             fragmentTransaction.replace(R.id.containerView, new AppointmentFragment()).commit();
-
 		} else if (id == R.id.nav_wachtrij) {
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.addToBackStack(null);
             fragmentTransaction.replace(R.id.containerView, new QueueFragment()).commit();
-
 		} else if (id == R.id.nav_video) {
-			FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-			fragmentTransaction.addToBackStack(null);
 			fragmentTransaction.replace(R.id.containerView, new YoutubePlayerFragment()).commit();
 		} else if(id == R.id.nav_route) {
 			Address origin = new Address("kerkstraat", "5", "Casteren");
