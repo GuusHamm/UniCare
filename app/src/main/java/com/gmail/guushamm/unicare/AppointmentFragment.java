@@ -36,8 +36,7 @@ public class AppointmentFragment extends Fragment {
         // Inflate tab_layout and setup Views.
         View view = inflater.inflate(R.layout.appointment_layout, null);
 
-
-
+        // Button to add appointment
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.add_appointment);
         fab.setColorFilter(Color.parseColor("#FFFFFF"));
         fab.setOnClickListener(new View.OnClickListener() {

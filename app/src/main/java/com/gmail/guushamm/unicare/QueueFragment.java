@@ -13,8 +13,14 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.Date;
+import java.util.TimeZone;
 
 public class QueueFragment extends Fragment {
 
@@ -34,10 +40,20 @@ public class QueueFragment extends Fragment {
 
 					@Override
 					public void onResponse(JSONObject response) {
-						TextView textView = (TextView) view.findViewById(R.id.QueueTextView);
-						textView.setText("Response: " + response.toString());
+						TextView waitingTextView = (TextView) view.findViewById(R.id.peopleWaiting);
+						TextView timeTextView = (TextView) view.findViewById(R.id.appointmentTime);
+						waitingTextView.setText("Response: " + response.toString());
 						try {
-							textView.setText(String.format("%d wachtende voor je, de wachttijd is ongeveer %d minuten",response.getInt("wachtende"),response.getInt("wachttijd")));
+							waitingTextView.setText(String.format("%d",response.getInt("wachtende")));
+
+							// Make curent date and add extra minutes
+							Date date = new Date();
+							DateTime dt = new DateTime(date);
+							DateTime newdt = dt.plusMinutes(response.getInt("wachttijd"));
+							newdt.withZone(DateTimeZone.forTimeZone(TimeZone.getDefault()));
+
+
+							timeTextView.setText(newdt.toString("HH:mm"));
 						} catch (JSONException e) {
 							e.printStackTrace();
 						}
@@ -46,7 +62,7 @@ public class QueueFragment extends Fragment {
 
 					@Override
 					public void onErrorResponse(VolleyError error) {
-						// TODO Auto-generated method stub
+
 
 					}
 				});
