@@ -1,5 +1,7 @@
 package com.gmail.guushamm.unicare;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
@@ -11,6 +13,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity
 		implements NavigationView.OnNavigationItemSelectedListener {
@@ -38,6 +44,11 @@ public class MainActivity extends AppCompatActivity
         fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.containerView, new HomeFragment() ).commit();
+
+
+		Address origin = new Address("kerkstraat", "5", "Casteren");
+		Address destination = new Address("De Run", "4600", "Veldhoven");
+		openGoogleMaps(origin, destination);
 	}
 
 	@Override
@@ -112,6 +123,22 @@ public class MainActivity extends AppCompatActivity
 
 
 		return true;
+	}
+
+	public void openGoogleMaps(Address origin, Address destination) {
+
+		String googleMapsString = "http://maps.google.com/maps?saddr=ORIGINSTREET+ORIGINNUMBER+ORIGINCITY&daddr=DESSTREET+DESNUMBER+DESCITY";
+
+		googleMapsString = googleMapsString.replace("ORIGINSTREET", origin.getStreet());
+		googleMapsString = googleMapsString.replace("ORIGINNUMBER", origin.getNumber());
+		googleMapsString = googleMapsString.replace("ORIGINCITY", origin.getCity());
+		//Destination
+		googleMapsString = googleMapsString.replace("DESSTREET", destination.getStreet());
+		googleMapsString = googleMapsString.replace("DESNUMBER", destination.getNumber());
+		googleMapsString = googleMapsString.replace("DESCITY", destination.getCity());
+
+		Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(googleMapsString));
+		startActivity(intent);
 	}
 
 
