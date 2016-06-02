@@ -12,11 +12,11 @@
                 android:title="Wachtrij"/>
         <item
                 android:id="@+id/nav_video"
-                android:icon="@drawable/ic_group_black_24px"
+                android:icon="@drawable/ic_menu_slideshow"
                 android:title="Video's"/>
         <item
                 android:id="@+id/nav_route"
-                android:icon="@drawable/ic_event_black_24px"
+                android:icon="@drawable/ic_directions_car_24dp"
                 android:title="Route"/>
     </group>
 
