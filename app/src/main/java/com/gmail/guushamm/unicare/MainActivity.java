@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity
 
 		navigationView = (NavigationView) findViewById(R.id.nav_view);
 		navigationView.setNavigationItemSelectedListener(this);
+		navigationView.getMenu().getItem(0).setChecked(true);
 
 		// Select current menu item
 		getSupportFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
@@ -57,25 +58,32 @@ public class MainActivity extends AppCompatActivity
 					switch (stackName) {
 						case "Start":
 							navigationView.getMenu().getItem(0).setChecked(true);
+							setTitle(navigationView.getMenu().getItem(0).getTitle());
 							break;
 						case "Afspraken":
 							navigationView.getMenu().getItem(1).setChecked(true);
+							setTitle(navigationView.getMenu().getItem(1).getTitle());
 							break;
 						case "Wachtrij":
 							navigationView.getMenu().getItem(2).setChecked(true);
+							setTitle(navigationView.getMenu().getItem(2).getTitle());
 							break;
 						case "Video's":
 							navigationView.getMenu().getItem(3).setChecked(true);
+							setTitle(navigationView.getMenu().getItem(3).getTitle());
 							break;
 						default:
 							navigationView.getMenu().getItem(0).setChecked(true);
+							setTitle(navigationView.getMenu().getItem(0).getTitle());
 							break;
 					}
 				}
 				else
 				{
 					navigationView.getMenu().getItem(0).setChecked(true);
+					setTitle(navigationView.getMenu().getItem(0).getTitle());
 				}
+
 			}
 		});
 
