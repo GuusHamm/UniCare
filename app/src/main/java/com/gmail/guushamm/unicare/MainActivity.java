@@ -132,27 +132,29 @@ public class MainActivity extends AppCompatActivity
 		if (gps.canGetLocation()) {
 			lat = gps.getLatitude();
 			longitute = gps.getLongitude();
-		} else {
-			gps.showSettingsAlert();
-		}
 
-		String googleMapsString = "http://maps.google.com/maps?saddr=LATITUDE,LONGITUDE&daddr=DESSTREET+DESNUMBER+DESCITY";
+			String googleMapsString = "http://maps.google.com/maps?saddr=LATITUDE,LONGITUDE&daddr=DESSTREET+DESNUMBER+DESCITY";
 //		String googleMapsString = "http://maps.google.com/maps?saddr=ORIGINSTREET+ORIGINNUMBER+ORIGINCITY&daddr=DESSTREET+DESNUMBER+DESCITY";
 //
 //		googleMapsString = googleMapsString.replace("ORIGINSTREET", origin.getStreet());
 //		googleMapsString = googleMapsString.replace("ORIGINNUMBER", origin.getNumber());
 //		googleMapsString = googleMapsString.replace("ORIGINCITY", origin.getCity());
-		googleMapsString = googleMapsString.replace("LATITUDE", String.valueOf(lat));
-		googleMapsString = googleMapsString.replace("LONGITUDE", String.valueOf(longitute));
+			googleMapsString = googleMapsString.replace("LATITUDE", String.valueOf(lat));
+			googleMapsString = googleMapsString.replace("LONGITUDE", String.valueOf(longitute));
 
 
-		//Destination
-		googleMapsString = googleMapsString.replace("DESSTREET", destination.getStreet());
-		googleMapsString = googleMapsString.replace("DESNUMBER", destination.getNumber());
-		googleMapsString = googleMapsString.replace("DESCITY", destination.getCity());
+			//Destination
+			googleMapsString = googleMapsString.replace("DESSTREET", destination.getStreet());
+			googleMapsString = googleMapsString.replace("DESNUMBER", destination.getNumber());
+			googleMapsString = googleMapsString.replace("DESCITY", destination.getCity());
 
-		Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(googleMapsString));
-		startActivity(intent);
+			Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(googleMapsString));
+			startActivity(intent);
+		} else {
+			gps.showSettingsAlert();
+		}
+
+
 	}
 
 
