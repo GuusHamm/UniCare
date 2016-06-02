@@ -5,4 +5,8 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Instellingen</string>
+
+    <!--       Queue layout          -->
+    <string name="title_people_waiting">Wachtenden voor u</string>
+    <string name="estimated_time">Verwachte afspraaktijd</string>
 </resources>
