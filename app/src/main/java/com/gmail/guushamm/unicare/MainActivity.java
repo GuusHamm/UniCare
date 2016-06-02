@@ -44,11 +44,6 @@ public class MainActivity extends AppCompatActivity
         fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.containerView, new HomeFragment() ).commit();
-
-
-		Address origin = new Address("kerkstraat", "5", "Casteren");
-		Address destination = new Address("De Run", "4600", "Veldhoven");
-		openGoogleMaps(origin, destination);
 	}
 
 	@Override
@@ -105,6 +100,10 @@ public class MainActivity extends AppCompatActivity
 			FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 			fragmentTransaction.addToBackStack(null);
 			fragmentTransaction.replace(R.id.containerView, new YoutubePlayerFragment()).commit();
+		} else if(id == R.id.nav_route) {
+			Address origin = new Address("kerkstraat", "5", "Casteren");
+			Address destination = new Address("De Run", "4600", "Veldhoven");
+			openGoogleMaps(origin, destination);
 		} else if (id == R.id.nav_share) {
 
 		} else if (id == R.id.nav_send) {
