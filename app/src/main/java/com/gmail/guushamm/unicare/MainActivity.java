@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity
 
 	FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
+	NavigationView navigationView;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -37,11 +38,37 @@ public class MainActivity extends AppCompatActivity
 		drawer.setDrawerListener(toggle);
 		toggle.syncState();
 
-		NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+		navigationView = (NavigationView) findViewById(R.id.nav_view);
 		navigationView.setNavigationItemSelectedListener(this);
 
-        // Inflate the first fragment, which is also the holder of the tabbed swipe view.
-        fragmentManager = getSupportFragmentManager();
+		// Select current menu item
+		getSupportFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
+			@Override
+			public void onBackStackChanged() {
+				FragmentManager fm = getSupportFragmentManager();
+				String stackName = null;
+				for(int entry = 0; entry < fm.getBackStackEntryCount(); entry++){
+					stackName = fm.getBackStackEntryAt(entry).getName();
+				}
+				switch (stackName){
+					case "Start":
+						navigationView.getMenu().getItem(0).setChecked(true);
+						break;
+					case "Afspraken":
+						navigationView.getMenu().getItem(1).setChecked(true);
+						break;
+					case "Wachtrij":
+						navigationView.getMenu().getItem(3).setChecked(true);
+						break;
+					case "Video's":
+						navigationView.getMenu().getItem(4).setChecked(true);
+						break;
+				}
+			}
+		});
+
+		// Inflate the first fragment, which is also the holder of the tabbed swipe view.
+		fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.containerView, new HomeFragment() ).commit();
 	}
@@ -52,7 +79,6 @@ public class MainActivity extends AppCompatActivity
 		if (drawer.isDrawerOpen(GravityCompat.START)) {
 			drawer.closeDrawer(GravityCompat.START);
 		} else {
-
 			super.onBackPressed();
 		}
 	}
@@ -86,16 +112,18 @@ public class MainActivity extends AppCompatActivity
 		int id = item.getItemId();
 
 		FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-		fragmentTransaction.addToBackStack(null);
 
-		if (id == R.id.nav_home)
-		{
+		if (id == R.id.nav_home) {
+			fragmentTransaction.addToBackStack("Start");
 			fragmentTransaction.replace(R.id.containerView, new HomeFragment()).commit();
 		} else if(id == R.id.nav_afspraak) {
+			fragmentTransaction.addToBackStack("Afspraken");
             fragmentTransaction.replace(R.id.containerView, new AppointmentFragment()).commit();
 		} else if (id == R.id.nav_wachtrij) {
+			fragmentTransaction.addToBackStack("Wachtrij");
             fragmentTransaction.replace(R.id.containerView, new QueueFragment()).commit();
 		} else if (id == R.id.nav_video) {
+			fragmentTransaction.addToBackStack("Video's");
 			fragmentTransaction.replace(R.id.containerView, new YoutubePlayerFragment()).commit();
 		} else if(id == R.id.nav_route) {
 			Address origin = new Address("kerkstraat", "5", "Casteren");
@@ -124,6 +152,8 @@ public class MainActivity extends AppCompatActivity
 
 		return true;
 	}
+
+
 
 	public void openGoogleMaps(Address origin, Address destination) {
 		GPSTracker gps = new GPSTracker(this);
