@@ -14,6 +14,12 @@ public class Address {
         this.city = city;
     }
 
+    public Address(String jsonString) {
+        this.street = jsonString.substring(0, jsonString.indexOf(";"));
+        this.number = jsonString.substring(jsonString.indexOf(";") + 1, jsonString.lastIndexOf(";"));
+        this.city = jsonString.substring(jsonString.lastIndexOf(";") + 1);
+    }
+
     //region getters and setters
     public String getStreet() {
         return street;
@@ -39,4 +45,10 @@ public class Address {
         this.city = city;
     }
     //endregion
+
+    public String toJson() {
+        String jsonString = "";
+        jsonString += getStreet() + ";" + getNumber() + ";" + getCity();
+        return jsonString;
+    }
 }

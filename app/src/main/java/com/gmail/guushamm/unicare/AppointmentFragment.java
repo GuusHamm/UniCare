@@ -14,8 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -75,7 +73,6 @@ public class AppointmentFragment extends Fragment {
                 JSONArray qrCodeArray = null;
                 JSONObject qrCode = null;
 
-                Gson gson = new Gson();
                 try {
                     qrCodeArray = new JSONArray(contents);
                     qrCode = qrCodeArray.getJSONObject(0);
