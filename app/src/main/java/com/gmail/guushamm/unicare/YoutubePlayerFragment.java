@@ -32,6 +32,7 @@ public class YoutubePlayerFragment extends Fragment {
 
 		videos.add("https://www.youtube.com/embed/8v2mEg9Cpvs");
 		videos.add("https://www.youtube.com/embed/ye27aIJD6qg");
+		videos.add("https://www.youtube.com/embed/0pz5C1nIKqU");
 
 		Random random = new Random();
 
