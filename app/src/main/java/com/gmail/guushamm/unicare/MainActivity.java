@@ -50,19 +50,28 @@ public class MainActivity extends AppCompatActivity
 				for(int entry = 0; entry < fm.getBackStackEntryCount(); entry++){
 					stackName = fm.getBackStackEntryAt(entry).getName();
 				}
-				switch (stackName){
-					case "Start":
-						navigationView.getMenu().getItem(0).setChecked(true);
-						break;
-					case "Afspraken":
-						navigationView.getMenu().getItem(1).setChecked(true);
-						break;
-					case "Wachtrij":
-						navigationView.getMenu().getItem(3).setChecked(true);
-						break;
-					case "Video's":
-						navigationView.getMenu().getItem(4).setChecked(true);
-						break;
+				if(stackName != null) {
+					switch (stackName) {
+						case "Start":
+							navigationView.getMenu().getItem(0).setChecked(true);
+							break;
+						case "Afspraken":
+							navigationView.getMenu().getItem(1).setChecked(true);
+							break;
+						case "Wachtrij":
+							navigationView.getMenu().getItem(2).setChecked(true);
+							break;
+						case "Video's":
+							navigationView.getMenu().getItem(3).setChecked(true);
+							break;
+						default:
+							navigationView.getMenu().getItem(0).setChecked(true);
+							break;
+					}
+				}
+				else
+				{
+					navigationView.getMenu().getItem(0).setChecked(true);
 				}
 			}
 		});
