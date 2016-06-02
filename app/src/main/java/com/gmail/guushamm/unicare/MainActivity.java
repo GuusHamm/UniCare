@@ -1,9 +1,12 @@
 package com.gmail.guushamm.unicare;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
@@ -162,35 +165,52 @@ public class MainActivity extends AppCompatActivity
 		return true;
 	}
 
-
+	@Override
+	public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+		openGoogleMaps(null, new Address("De Run", "4600", "Veldhoven"));
+	}
 
 	public void openGoogleMaps(Address origin, Address destination) {
-		GPSTracker gps = new GPSTracker(this);
-		double lat = 0.0;
-		double longitute = 0.0;
-		if (gps.canGetLocation()) {
-			lat = gps.getLatitude();
-			longitute = gps.getLongitude();
+		// Ask permission if it's not set for location
+		if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+				&& ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+			if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_COARSE_LOCATION)) {
+				ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
+			} else {
+				ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
+			}
+		}
 
-			String googleMapsString = "http://maps.google.com/maps?saddr=LATITUDE,LONGITUDE&daddr=DESSTREET+DESNUMBER+DESCITY";
-//		String googleMapsString = "http://maps.google.com/maps?saddr=ORIGINSTREET+ORIGINNUMBER+ORIGINCITY&daddr=DESSTREET+DESNUMBER+DESCITY";
-//
-//		googleMapsString = googleMapsString.replace("ORIGINSTREET", origin.getStreet());
-//		googleMapsString = googleMapsString.replace("ORIGINNUMBER", origin.getNumber());
-//		googleMapsString = googleMapsString.replace("ORIGINCITY", origin.getCity());
-			googleMapsString = googleMapsString.replace("LATITUDE", String.valueOf(lat));
-			googleMapsString = googleMapsString.replace("LONGITUDE", String.valueOf(longitute));
+		if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+				&& ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+			GPSTracker gps = new GPSTracker(this);
+			double lat = 0.0;
+			double longitude = 0.0;
+			if (gps.canGetLocation()) {
+				lat = gps.getLatitude();
+				longitude = gps.getLongitude();
+
+				String googleMapsString = "http://maps.google.com/maps?saddr=LATITUDE,LONGITUDE&daddr=DESSTREET+DESNUMBER+DESCITY";
+				//		String googleMapsString = "http://maps.google.com/maps?saddr=ORIGINSTREET+ORIGINNUMBER+ORIGINCITY&daddr=DESSTREET+DESNUMBER+DESCITY";
+				//
+				//		googleMapsString = googleMapsString.replace("ORIGINSTREET", origin.getStreet());
+				//		googleMapsString = googleMapsString.replace("ORIGINNUMBER", origin.getNumber());
+				//		googleMapsString = googleMapsString.replace("ORIGINCITY", origin.getCity());
+				googleMapsString = googleMapsString.replace("LATITUDE", String.valueOf(lat));
+				googleMapsString = googleMapsString.replace("LONGITUDE", String.valueOf(longitude));
 
 
-			//Destination
-			googleMapsString = googleMapsString.replace("DESSTREET", destination.getStreet());
-			googleMapsString = googleMapsString.replace("DESNUMBER", destination.getNumber());
-			googleMapsString = googleMapsString.replace("DESCITY", destination.getCity());
+				//Destination
+				googleMapsString = googleMapsString.replace("DESSTREET", destination.getStreet());
+				googleMapsString = googleMapsString.replace("DESNUMBER", destination.getNumber());
+				googleMapsString = googleMapsString.replace("DESCITY", destination.getCity());
 
-			Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(googleMapsString));
-			startActivity(intent);
-		} else {
-			gps.showSettingsAlert();
+				Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(googleMapsString));
+				startActivity(intent);
+			} else {
+				gps.showSettingsAlert();
+			}
 		}
 
 
