@@ -42,6 +42,7 @@ public class QueueFragment extends Fragment {
 					public void onResponse(JSONObject response) {
 						TextView waitingTextView = (TextView) view.findViewById(R.id.peopleWaiting);
 						TextView timeTextView = (TextView) view.findViewById(R.id.appointmentTime);
+	x					TextView waitTime = (TextView) view.findViewById(R.id.waitTime);
 						waitingTextView.setText("Response: " + response.toString());
 						try {
 							waitingTextView.setText(String.format("%d",response.getInt("wachtende")));
@@ -54,6 +55,7 @@ public class QueueFragment extends Fragment {
 
 
 							timeTextView.setText(newdt.toString("HH:mm"));
+							waitTime.setText(String.format("%s min",response.getString("wachttijd")));
 						} catch (JSONException e) {
 							e.printStackTrace();
 						}

@@ -9,4 +9,5 @@
     <!--       Queue layout          -->
     <string name="title_people_waiting">Wachtenden voor u</string>
     <string name="estimated_time">Verwachte afspraaktijd</string>
+    <string name="wait_time">Verwachte wachtttijd</string>
 </resources>

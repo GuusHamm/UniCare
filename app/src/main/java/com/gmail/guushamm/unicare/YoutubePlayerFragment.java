@@ -30,9 +30,9 @@ public class YoutubePlayerFragment extends Fragment {
 
 		List<String> videos = new ArrayList<>();
 
-		videos.add("https://www.youtube.com/embed/8v2mEg9Cpvs");
-		videos.add("https://www.youtube.com/embed/ye27aIJD6qg");
-		videos.add("https://www.youtube.com/embed/0pz5C1nIKqU");
+		videos.add("https://www.youtube.com/watch?v=8v2mEg9Cpvs");
+		videos.add("https://www.youtube.com/watch?v=ye27aIJD6qg");
+		videos.add("https://www.youtube.com/watch?v=0pz5C1nIKqU");
 
 		Random random = new Random();
 
