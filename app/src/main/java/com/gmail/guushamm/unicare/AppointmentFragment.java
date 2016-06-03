@@ -87,14 +87,15 @@ public class AppointmentFragment extends Fragment {
 
                     String title = String.format("Afspraak met %s", qrCode.getString("doctor"));
 
-                    String location = qrCode.getString("location");
+                    Address address = new Address(qrCode.getString("location"));
+                    System.out.println(address.toString());
 
                     Intent intent = new Intent(Intent.ACTION_INSERT)
                             .setData(CalendarContract.Events.CONTENT_URI)
                             .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, beginTime.getTimeInMillis())
                             .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endTime.getTimeInMillis())
                             .putExtra(CalendarContract.Events.TITLE, title)
-                            .putExtra(CalendarContract.Events.EVENT_LOCATION, location)
+                            .putExtra(CalendarContract.Events.EVENT_LOCATION, address.toString())
                             .putExtra(CalendarContract.Events.AVAILABILITY, CalendarContract.Events.AVAILABILITY_BUSY);
                     startActivity(intent);
 

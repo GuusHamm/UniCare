@@ -7,20 +7,40 @@ public class Address {
     private String street;
     private String number;
     private String city;
+    private String postcode;
 
-    public Address(String street, String number, String city) {
+    public Address(String street, String number, String city, String postcode) {
         this.street = street;
         this.number = number;
         this.city = city;
+        this.postcode = postcode;
     }
 
+
+
     public Address(String jsonString) {
-        this.street = jsonString.substring(0, jsonString.indexOf(";"));
-        this.number = jsonString.substring(jsonString.indexOf(";") + 1, jsonString.lastIndexOf(";"));
-        this.city = jsonString.substring(jsonString.lastIndexOf(";") + 1);
+        int firstSeperator = jsonString.indexOf(";");
+        int secondSeperator = jsonString.indexOf(";", firstSeperator + 1);
+        int lastSeperator = jsonString.lastIndexOf(";");
+
+        System.out.println(jsonString);
+
+        this.street = jsonString.substring(0, firstSeperator);
+        this.number = jsonString.substring(firstSeperator + 1, secondSeperator);
+        this.city = jsonString.substring(secondSeperator + 1, lastSeperator);
+        this.postcode = jsonString.substring(lastSeperator + 1);
     }
 
     //region getters and setters
+
+    public String getPostcode() {
+        return postcode;
+    }
+
+    public void setPostcode(String postcode) {
+        this.postcode = postcode;
+    }
+
     public String getStreet() {
         return street;
     }
@@ -48,7 +68,11 @@ public class Address {
 
     public String toJson() {
         String jsonString = "";
-        jsonString += getStreet() + ";" + getNumber() + ";" + getCity();
+        jsonString += getStreet() + ";" + getNumber() + ";" + getCity() + ";" + getPostcode();
         return jsonString;
+    }
+
+    public String toString() {
+        return String.format("%s %s, %s %s", getStreet(), getNumber(), getPostcode(), getCity());
     }
 }
