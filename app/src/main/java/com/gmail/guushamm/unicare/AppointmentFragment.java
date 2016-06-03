@@ -1,24 +1,36 @@
 package com.gmail.guushamm.unicare;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.CalendarContract;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+
+import me.everything.providers.android.calendar.CalendarProvider;
+import me.everything.providers.android.calendar.Event;
 
 /**
  * Created by Erwin on 26-5-2016.
@@ -26,6 +38,10 @@ import java.util.Date;
 public class AppointmentFragment extends Fragment {
 
     static final long ONE_MINUTE_IN_MILLIS = 60000;
+    private static final int MY_PERMISSIONS_REQUEST_READ_CALENDAR = 0;
+    ArrayAdapter<Event> adapter;
+    List<Event> events;
+    ListView postsList;
 
     @Nullable
     @Override
@@ -33,6 +49,8 @@ public class AppointmentFragment extends Fragment {
         super.onCreate(savedInstanceState);
         // Inflate tab_layout and setup Views.
         View view = inflater.inflate(R.layout.appointment_layout, null);
+        postsList = (ListView) view.findViewById(R.id.appointmentList);
+        events = new ArrayList<Event>();
 
         // Button to add appointment
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.add_appointment);
@@ -57,8 +75,39 @@ public class AppointmentFragment extends Fragment {
                 }
         	}
         });
-
+        if (ContextCompat.checkSelfPermission(getActivity(),
+                Manifest.permission.READ_CALENDAR)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(),
+                    new String[]{Manifest.permission.READ_CALENDAR},
+                    MY_PERMISSIONS_REQUEST_READ_CALENDAR);
+        }
+        else
+        {
+            fillList();
+        }
+        createAdapter();
         return view;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_READ_CALENDAR: {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    fillList();
+                } else {
+
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                }
+                return;
+            }
+
+            // other 'switch' lines to check for other
+            // permissions this app might request
+        }
     }
 
     @Override
@@ -109,6 +158,64 @@ public class AppointmentFragment extends Fragment {
                 //handle cancel
             }
         }
+    }
+
+    private void createAdapter(){
+
+        // Make sure this fragment is still a part of the activity.
+        if(getActivity()==null) return;
+
+        adapter=new ArrayAdapter<Event>(getActivity()
+                ,R.layout.appointment_item
+                , events){
+            @Override
+            public View getView(int position,
+                                View convertView,
+                                ViewGroup parent) {
+
+                if(convertView==null){
+                    convertView=getActivity()
+                            .getLayoutInflater()
+                            .inflate(R.layout.appointment_item, null);
+                }
+
+                TextView eventTime;
+                eventTime=(TextView)convertView
+                        .findViewById(R.id.appointmentTime);
+
+                TextView eventTitle;
+                eventTitle=(TextView)convertView
+                        .findViewById(R.id.appointmentTitle);
+
+                TextView eventLocation;
+                eventLocation=(TextView)convertView
+                        .findViewById(R.id.appointmentLocation);
+
+                String dateString = new SimpleDateFormat("dd/MM HH:mm").format(new Date(events.get(position).dTStart));
+                eventTime.setText(dateString);
+                eventTitle.setText(events.get(position).title);
+                eventLocation.setText(events.get(position).eventLocation);
+                return convertView;
+            }
+        };
+        postsList.setAdapter(adapter);
+    }
+
+    private void fillList(){
+        CalendarProvider calendarProvider = new CalendarProvider(getActivity());
+        List<me.everything.providers.android.calendar.Calendar> calendars = calendarProvider.getCalendars().getList();
+        for (me.everything.providers.android.calendar.Calendar i:calendars
+             ) {
+            for (Event j:calendarProvider.getEvents(i.id).getList()
+                 ) {if(j.title.contains("Afspraak met"))
+            {
+                events.add(j);
+            }
+                
+            }
+
+        }
+
     }
 
 }
