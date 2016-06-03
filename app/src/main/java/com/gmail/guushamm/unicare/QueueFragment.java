@@ -1,6 +1,7 @@
 package com.gmail.guushamm.unicare;
 
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -13,7 +14,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.json.JSONException;
@@ -39,10 +39,10 @@ public class QueueFragment extends Fragment {
 		JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.GET, url, (String) null, new Response.Listener<JSONObject>() {
 
 					@Override
-					public void onResponse(JSONObject response) {
-						TextView waitingTextView = (TextView) view.findViewById(R.id.peopleWaiting);
+					public void onResponse(final JSONObject response) {
+						final TextView waitingTextView = (TextView) view.findViewById(R.id.peopleWaiting);
 						TextView timeTextView = (TextView) view.findViewById(R.id.appointmentTime);
-						TextView waitTime = (TextView) view.findViewById(R.id.waitTime);
+						final TextView waitTime = (TextView) view.findViewById(R.id.waitTime);
 						waitingTextView.setText("Response: " + response.toString());
 						try {
 							waitingTextView.setText(String.format("%d",response.getInt("wachtende")));
@@ -53,9 +53,40 @@ public class QueueFragment extends Fragment {
 							DateTime newdt = dt.plusMinutes(response.getInt("wachttijd"));
 							newdt.withZone(DateTimeZone.forTimeZone(TimeZone.getDefault()));
 
-
 							timeTextView.setText(newdt.toString("HH:mm"));
-							waitTime.setText(String.format("%s min",response.getString("wachttijd")));
+
+							final int[] toWaitTime = {response.getInt("wachttijd")};
+							final int[] waiting = {response.getInt("wachtende")};
+							waitTime.setText(String.format("%d min", toWaitTime[0]));
+
+							int waitTimePerWaiting = (toWaitTime[0] * 60000) / waiting[0];
+
+							CountDownTimer waitingCountDownTimer = new CountDownTimer((toWaitTime[0] * 60 * 1000),waitTimePerWaiting) {
+								@Override
+								public void onTick(long millisUntilFinished) {
+									waiting[0]--;
+									waitingTextView.setText(String.format("%d",waiting[0]));
+								}
+
+								@Override
+								public void onFinish() {
+									waitingTextView.setText(String.format("%d",0));
+								}
+							}.start();
+
+							CountDownTimer countDownTimer = new CountDownTimer((toWaitTime[0] * 60 * 1000),60000) {
+								@Override
+								public void onTick(long millisUntilFinished) {
+									toWaitTime[0]--;
+									waitTime.setText(String.format("%d min", toWaitTime[0]));
+								}
+
+								@Override
+								public void onFinish() {
+									waitTime.setText(String.format("%d min", 0));
+								}
+							}.start();
+
 						} catch (JSONException e) {
 							e.printStackTrace();
 						}
