@@ -25,7 +25,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import me.everything.providers.android.calendar.CalendarProvider;
 import me.everything.providers.android.calendar.Event;
 
 /**
@@ -34,7 +33,6 @@ import me.everything.providers.android.calendar.Event;
 public class AppointmentFragment extends Fragment {
 
     static final long ONE_MINUTE_IN_MILLIS = 60000;
-    private static final int MY_PERMISSIONS_REQUEST_READ_CALENDAR = 0;
     ArrayAdapter<Event> adapter;
     List<Event> events;
     ListView postsList;
@@ -75,7 +73,7 @@ public class AppointmentFragment extends Fragment {
         calendarPermission = ((MainActivity)getActivity()).getCalendarPermission();
         if(calendarPermission)
         {
-            fillEventList();
+            createAdapter();
         }
 
         return view;
@@ -140,6 +138,7 @@ public class AppointmentFragment extends Fragment {
     private void createAdapter(){
         // Make sure this fragment is still a part of the activity.
         if(getActivity()==null) return;
+        events = ((MainActivity)getActivity()).getCalendarEventList();
 
         adapter=new ArrayAdapter<Event>(getActivity()
                 ,R.layout.appointment_item
@@ -177,24 +176,5 @@ public class AppointmentFragment extends Fragment {
         postsList.setAdapter(adapter);
     }
 
-    public void fillEventList()
-    {
-        if(events != null)
-        {
-            events.clear();
-        }
-        CalendarProvider calendarProvider = new CalendarProvider(getActivity());
-        List<me.everything.providers.android.calendar.Calendar> calendars = calendarProvider.getCalendars().getList();
-        for (me.everything.providers.android.calendar.Calendar i:calendars
-                ) {
-            for (Event j:calendarProvider.getEvents(i.id).getList()
-                    ) {if(j.title.contains("Afspraak met"))
-            {
-                events.add(j);
-            }
 
-            }
-        }
-        createAdapter();
-    }
 }

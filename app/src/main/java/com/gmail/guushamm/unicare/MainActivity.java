@@ -18,8 +18,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import me.everything.providers.android.calendar.CalendarProvider;
 import me.everything.providers.android.calendar.Event;
 
 public class MainActivity extends AppCompatActivity
@@ -41,6 +43,10 @@ public class MainActivity extends AppCompatActivity
 		setContentView(R.layout.activity_main);
 		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
+		events = new ArrayList<Event>();
+		ActivityCompat.requestPermissions(this,
+				new String[]{Manifest.permission.READ_CALENDAR},
+				MY_PERMISSIONS_REQUEST_READ_CALENDAR);
 
 		DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 		ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -96,10 +102,6 @@ public class MainActivity extends AppCompatActivity
 		fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.containerView, new HomeFragment() ).commit();
-
-		ActivityCompat.requestPermissions(this,
-				new String[]{Manifest.permission.READ_CALENDAR},
-				MY_PERMISSIONS_REQUEST_READ_CALENDAR);
 	}
 
 	@Override
@@ -184,7 +186,7 @@ public class MainActivity extends AppCompatActivity
 
 	@Override
 	public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
-		System.out.println("breakpoint test fragment mainactivity"+ String.valueOf(requestCode));
+		System.out.println("breakpoint test fragment mainactivity" + String.valueOf(requestCode));
         switch (requestCode) {
             case MY_PERMISSIONS_REQUEST_ACCESS_LOCATION: {
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -201,8 +203,10 @@ public class MainActivity extends AppCompatActivity
 			case MY_PERMISSIONS_REQUEST_READ_CALENDAR: {
 				System.out.println("TEEEEEEEEEEEST"+ String.valueOf(grantResults[0]));
 				if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-					System.out.println("PERMISSION GIVEN");
+					fillEventList();
 					calendarPermission = true;
+
+
 				} else {
 					System.out.println("PERMISSION NOT GIVEN");
 					calendarPermission = false;
@@ -257,6 +261,30 @@ public class MainActivity extends AppCompatActivity
 		return calendarPermission;
 	}
 
+	public void fillEventList()
+	{
+		if(events != null)
+		{
+			events.clear();
+		}
+		CalendarProvider calendarProvider = new CalendarProvider(this);
+		List<me.everything.providers.android.calendar.Calendar> calendars = calendarProvider.getCalendars().getList();
+		for (me.everything.providers.android.calendar.Calendar i:calendars
+				) {
+			for (Event j:calendarProvider.getEvents(i.id).getList()
+					) {if(j.title.contains("Afspraak met"))
+			{
+				events.add(j);
+			}
+
+			}
+		}
+	}
+
+	public List<Event> getCalendarEventList()
+	{
+		return events;
+	}
 
 
 }
