@@ -10,4 +10,9 @@
     <string name="title_people_waiting">Wachtenden voor u</string>
     <string name="estimated_time">Verwachte afspraaktijd</string>
     <string name="wait_time">Verwachte wachtttijd</string>
+
+
+    <string name="home_nextappointment">Volgende afspraak</string>
+    <string name="home_noappointment">Geen afspraak gevonden</string>
+    <string name="home_notime">Onbekende tijd</string>
 </resources>

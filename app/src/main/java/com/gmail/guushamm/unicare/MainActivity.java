@@ -3,7 +3,6 @@ package com.gmail.guushamm.unicare;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -17,10 +16,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
-import org.json.JSONArray;
-import org.json.JSONObject;
+
+import java.util.List;
+
+import me.everything.providers.android.calendar.Event;
 
 public class MainActivity extends AppCompatActivity
 		implements NavigationView.OnNavigationItemSelectedListener {
@@ -28,6 +28,12 @@ public class MainActivity extends AppCompatActivity
 	FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
 	NavigationView navigationView;
+    private static final int MY_PERMISSIONS_REQUEST_READ_CALENDAR = 0;
+    private static final int MY_PERMISSIONS_REQUEST_ACCESS_LOCATION = 1;
+	private static List<Event> events;
+	private Address destination;
+	private Address origin;
+	private boolean calendarPermission;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -90,6 +96,10 @@ public class MainActivity extends AppCompatActivity
 		fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.containerView, new HomeFragment() ).commit();
+
+		ActivityCompat.requestPermissions(this,
+				new String[]{Manifest.permission.READ_CALENDAR},
+				MY_PERMISSIONS_REQUEST_READ_CALENDAR);
 	}
 
 	@Override
@@ -145,9 +155,9 @@ public class MainActivity extends AppCompatActivity
 			fragmentTransaction.addToBackStack("Video's");
 			fragmentTransaction.replace(R.id.containerView, new YoutubePlayerFragment()).commit();
 		} else if(id == R.id.nav_route) {
-			Address origin = new Address("kerkstraat", "5", "Casteren", "5529 AK");
-			Address destination = new Address("Michelangelolaan", "2", "Eindhoven", "5623 EJ");
-			openGoogleMaps(origin, destination);
+			origin = new Address("kerkstraat", "5", "Casteren", "5529 AK");
+			destination = new Address("Michelangelolaan", "2", "Eindhoven", "5623 EJ");
+			ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, MY_PERMISSIONS_REQUEST_ACCESS_LOCATION);
 
 			//Testing
 			Address test = new Address(destination.toJson());
@@ -174,21 +184,62 @@ public class MainActivity extends AppCompatActivity
 
 	@Override
 	public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
-		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-		openGoogleMaps(null, new Address("De Run", "4600", "Veldhoven", "5504 DB"));
+		System.out.println("breakpoint test fragment mainactivity"+ String.valueOf(requestCode));
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_ACCESS_LOCATION: {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    openGoogleMaps(origin, destination);
+                } else {
+					Toast.makeText(this, "GPS permission not given!", Toast.LENGTH_SHORT);
+
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                }
+                return;
+            }
+
+			case MY_PERMISSIONS_REQUEST_READ_CALENDAR: {
+				System.out.println("TEEEEEEEEEEEST"+ String.valueOf(grantResults[0]));
+				if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+					System.out.println("PERMISSION GIVEN");
+					calendarPermission = true;
+				} else {
+					System.out.println("PERMISSION NOT GIVEN");
+					calendarPermission = false;
+					// permission denied, boo! Disable the
+					// functionality that depends on this permission.
+				}
+				return;
+			}
+
+            // other 'switch' lines to check for other
+            // permissions this app might request
+        }
+
 	}
 
 	public void openGoogleMaps(Address origin, Address destination) {
 		// Ask permission if it's not set for location
+		/*
 		if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
 				&& ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-			if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_COARSE_LOCATION)) {
-				ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
-			} else {
-				ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
-			}
+			ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, MY_PERMISSIONS_REQUEST_ACCESS_LOCATION);
 		}
+		else
+		{
+			//ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, MY_PERMISSIONS_REQUEST_ACCESS_LOCATION);
+			ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, MY_PERMISSIONS_REQUEST_ACCESS_LOCATION);
+			String googleMapsString = "http://maps.google.com/maps?daddr=DESSTREET+DESNUMBER+DESCITY";
 
+			//Destination
+			googleMapsString = googleMapsString.replace("DESSTREET", destination.getStreet());
+			googleMapsString = googleMapsString.replace("DESNUMBER", destination.getNumber());
+			googleMapsString = googleMapsString.replace("DESCITY", destination.getCity());
+
+			Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(googleMapsString));
+			startActivity(intent);
+		}
+		*/
 		String googleMapsString = "http://maps.google.com/maps?daddr=DESSTREET+DESNUMBER+DESCITY";
 
 		//Destination
@@ -200,6 +251,12 @@ public class MainActivity extends AppCompatActivity
 		startActivity(intent);
 
 	}
+
+	public boolean getCalendarPermission()
+	{
+		return calendarPermission;
+	}
+
 
 
 }

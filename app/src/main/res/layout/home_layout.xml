@@ -4,10 +4,50 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Home Fragment/Layout"
-        android:layout_gravity="center"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="95dp"
+        android:background="@color/colorPrimary"
+        android:padding="10dp">
+        <TextView
+            android:id="@+id/textNextAppointment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/home_nextappointment"
+            android:textColor="@color/colorWhite"/>
+        <TextView
+            android:id="@+id/textAppointmentInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:layout_below="@+id/textNextAppointment"
+            android:text="@string/home_noappointment"
+            android:textSize="20sp"
+            android:textColor="@color/colorWhite"/>
+        <TextView
+            android:id="@+id/textAppointmentTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textAppointmentInfo"
+            android:text="@string/home_notime"
+            android:textColor="@color/colorWhite" />
+
+        <ImageButton
+            android:visibility="invisible"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:id="@+id/imagebuttonRoute"
+            android:src="@drawable/ic_map_75dp"
+            android:tint="@color/colorWhite"
+            android:scaleType="fitCenter"
+            android:background="@color/colorPrimaryDark"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true" />
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></RelativeLayout>
 
 </LinearLayout>

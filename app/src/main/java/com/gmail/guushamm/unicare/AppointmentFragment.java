@@ -1,17 +1,13 @@
 package com.gmail.guushamm.unicare;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.CalendarContract;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,6 +38,7 @@ public class AppointmentFragment extends Fragment {
     ArrayAdapter<Event> adapter;
     List<Event> events;
     ListView postsList;
+    private boolean calendarPermission;
 
     @Nullable
     @Override
@@ -56,8 +53,8 @@ public class AppointmentFragment extends Fragment {
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.add_appointment);
         fab.setColorFilter(Color.parseColor("#FFFFFF"));
         fab.setOnClickListener(new View.OnClickListener() {
-        	@Override
-        	public void onClick(View view) {
+            @Override
+            public void onClick(View view) {
                 // Handle the camera action
                 try {
 
@@ -73,41 +70,20 @@ public class AppointmentFragment extends Fragment {
                     startActivity(marketIntent);
 
                 }
-        	}
+            }
         });
-        if (ContextCompat.checkSelfPermission(getActivity(),
-                Manifest.permission.READ_CALENDAR)
-                != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(getActivity(),
-                    new String[]{Manifest.permission.READ_CALENDAR},
-                    MY_PERMISSIONS_REQUEST_READ_CALENDAR);
-        }
-        else
+        calendarPermission = ((MainActivity)getActivity()).getCalendarPermission();
+        if(calendarPermission)
         {
-            fillList();
+            fillEventList();
         }
-        createAdapter();
+
         return view;
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           String permissions[], int[] grantResults) {
-        switch (requestCode) {
-            case MY_PERMISSIONS_REQUEST_READ_CALENDAR: {
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    fillList();
-                } else {
-
-                    // permission denied, boo! Disable the
-                    // functionality that depends on this permission.
-                }
-                return;
-            }
-
-            // other 'switch' lines to check for other
-            // permissions this app might request
-        }
+    public void onResume() {
+        super.onResume();
     }
 
     @Override
@@ -160,8 +136,8 @@ public class AppointmentFragment extends Fragment {
         }
     }
 
-    private void createAdapter(){
 
+    private void createAdapter(){
         // Make sure this fragment is still a part of the activity.
         if(getActivity()==null) return;
 
@@ -201,21 +177,24 @@ public class AppointmentFragment extends Fragment {
         postsList.setAdapter(adapter);
     }
 
-    private void fillList(){
+    public void fillEventList()
+    {
+        if(events != null)
+        {
+            events.clear();
+        }
         CalendarProvider calendarProvider = new CalendarProvider(getActivity());
         List<me.everything.providers.android.calendar.Calendar> calendars = calendarProvider.getCalendars().getList();
         for (me.everything.providers.android.calendar.Calendar i:calendars
-             ) {
+                ) {
             for (Event j:calendarProvider.getEvents(i.id).getList()
-                 ) {if(j.title.contains("Afspraak met"))
+                    ) {if(j.title.contains("Afspraak met"))
             {
                 events.add(j);
             }
-                
+
             }
-
         }
-
+        createAdapter();
     }
-
 }
