@@ -280,7 +280,8 @@ public class MainActivity extends AppCompatActivity
 			Iterator<Event> it = eventsList.iterator();
 			while (it.hasNext()) {
 				Event event = it.next();
-				if (event.title.contains("Afspraak met")) {
+                String title = event.title;
+				if (title != null && title.contains("Afspraak met")) {
 					events.add(event);
 				}
 			}
