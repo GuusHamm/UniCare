@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import me.everything.providers.android.calendar.CalendarProvider;
@@ -33,8 +34,8 @@ public class MainActivity extends AppCompatActivity
     private static final int MY_PERMISSIONS_REQUEST_READ_CALENDAR = 0;
     private static final int MY_PERMISSIONS_REQUEST_ACCESS_LOCATION = 1;
 	private static List<Event> events;
-	private Address destination;
-	private Address origin;
+	private CustomAddress destination;
+	private CustomAddress origin;
 	private boolean calendarPermission;
 
 	@Override
@@ -157,12 +158,12 @@ public class MainActivity extends AppCompatActivity
 			fragmentTransaction.addToBackStack("Video's");
 			fragmentTransaction.replace(R.id.containerView, new YoutubePlayerFragment()).commit();
 		} else if(id == R.id.nav_route) {
-			origin = new Address("kerkstraat", "5", "Casteren", "5529 AK");
-			destination = new Address("Michelangelolaan", "2", "Eindhoven", "5623 EJ");
+			origin = new CustomAddress("kerkstraat", "5", "Casteren", "5529 AK");
+			destination = new CustomAddress("Michelangelolaan", "2", "Eindhoven", "5623 EJ");
 			ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, MY_PERMISSIONS_REQUEST_ACCESS_LOCATION);
 
 			//Testing
-			Address test = new Address(destination.toJson());
+			CustomAddress test = new CustomAddress(destination.toJson());
 			System.out.println("breakpoint test");
 		} else if (id == R.id.nav_share) {
 
@@ -190,7 +191,7 @@ public class MainActivity extends AppCompatActivity
         switch (requestCode) {
             case MY_PERMISSIONS_REQUEST_ACCESS_LOCATION: {
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    openGoogleMaps(origin, destination);
+                    openGoogleMaps(destination);
                 } else {
 					Toast.makeText(this, "GPS permission not given!", Toast.LENGTH_SHORT);
 
@@ -222,28 +223,7 @@ public class MainActivity extends AppCompatActivity
 
 	}
 
-	public void openGoogleMaps(Address origin, Address destination) {
-		// Ask permission if it's not set for location
-		/*
-		if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-				&& ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-			ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, MY_PERMISSIONS_REQUEST_ACCESS_LOCATION);
-		}
-		else
-		{
-			//ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, MY_PERMISSIONS_REQUEST_ACCESS_LOCATION);
-			ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, MY_PERMISSIONS_REQUEST_ACCESS_LOCATION);
-			String googleMapsString = "http://maps.google.com/maps?daddr=DESSTREET+DESNUMBER+DESCITY";
-
-			//Destination
-			googleMapsString = googleMapsString.replace("DESSTREET", destination.getStreet());
-			googleMapsString = googleMapsString.replace("DESNUMBER", destination.getNumber());
-			googleMapsString = googleMapsString.replace("DESCITY", destination.getCity());
-
-			Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(googleMapsString));
-			startActivity(intent);
-		}
-		*/
+	public void openGoogleMaps(CustomAddress destination) {
 		String googleMapsString = "http://maps.google.com/maps?daddr=DESSTREET+DESNUMBER+DESCITY";
 
 		//Destination
@@ -251,6 +231,14 @@ public class MainActivity extends AppCompatActivity
 		googleMapsString = googleMapsString.replace("DESNUMBER", destination.getNumber());
 		googleMapsString = googleMapsString.replace("DESCITY", destination.getCity());
 
+		Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(googleMapsString));
+		startActivity(intent);
+
+	}
+
+	public void openGoogleMaps(String destination) {
+		String googleMapsString = "http://maps.google.com/maps?daddr=";
+		googleMapsString += destination;
 		Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(googleMapsString));
 		startActivity(intent);
 
@@ -269,15 +257,23 @@ public class MainActivity extends AppCompatActivity
 		}
 		CalendarProvider calendarProvider = new CalendarProvider(this);
 		List<me.everything.providers.android.calendar.Calendar> calendars = calendarProvider.getCalendars().getList();
-		for (me.everything.providers.android.calendar.Calendar i:calendars
-				) {
-			for (Event j:calendarProvider.getEvents(i.id).getList()
-					) {if(j.title.contains("Afspraak met"))
-			{
-				events.add(j);
-			}
+		for (me.everything.providers.android.calendar.Calendar i:calendars) {
 
+			List<Event> eventsList = calendarProvider.getEvents(i.id).getList();
+			Iterator<Event> it = eventsList.iterator();
+			while (it.hasNext()) {
+				Event event = it.next();
+				if (event.title.contains("Afspraak met")) {
+					events.add(event);
+				}
 			}
+//			if (events != null) {
+//				for (Event j:events) {
+//					if(j.title.contains("Afspraak met")) {
+//						events.add(j);
+//					}
+//				}
+//			}
 		}
 	}
 
@@ -286,5 +282,9 @@ public class MainActivity extends AppCompatActivity
 		return events;
 	}
 
+	public void createProxyAlert() {
+		GPSTracker gpsTracker = new GPSTracker(this);
+		gpsTracker.createProxyAlert("");
+	}
 
 }

@@ -89,7 +89,7 @@
 # From Joseph Gallant citing
 # George H. Douglas, _The Early Days of Radio Broadcasting_ (1987):
 # At 7 P.M. (Eastern War Time) [on 1945-08-14], the networks were set
-# to switch to London for Attlee's address, but the American people
+# to switch to London for Attlee's customAddress, but the American people
 # never got to hear his speech live. According to one press account,
 # CBS' Bob Trout was first to announce the word of Japan's surrender,
 # but a few seconds later, NBC, ABC and Mutual also flashed the word
@@ -2136,7 +2136,7 @@ Zone America/Creston	-7:46:04 -	LMT	1884
 # On Nov 02/2008 most of Canada went onto standard time. On Nov 03/2008 I
 # phoned the Resolute Bay hamlet office...[D]ue to the challenging nature
 # of the phone call, I decided to seek out an alternate source of
-# information. I found an e-mail address for somebody by the name of
+# information. I found an e-mail customAddress for somebody by the name of
 # Stephanie Adams whose job was listed as "Inns North Support Officer for
 # Arctic Co-operatives." I was under the impression that Stephanie lived
 # and worked in Resolute Bay...
@@ -2148,7 +2148,7 @@ Zone America/Creston	-7:46:04 -	LMT	1884
 # had previously experimented with Eastern Standard Time but he could not
 # tell me when the practice had stopped.
 #
-# On March 17/2011 I searched the Web to find an e-mail address of
+# On March 17/2011 I searched the Web to find an e-mail customAddress of
 # somebody that might be able to tell me exactly when Resolute Bay went
 # off Eastern Standard Time. I stumbled on the name "Aziz Kheraj." Aziz
 # used to be the mayor of Resolute Bay and he apparently owns half the

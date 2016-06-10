@@ -3,13 +3,13 @@ package com.gmail.guushamm.unicare;
 /**
  * Created by Nekkyou on 2-6-2016.
  */
-public class Address {
+public class CustomAddress {
     private String street;
     private String number;
     private String city;
     private String postcode;
 
-    public Address(String street, String number, String city, String postcode) {
+    public CustomAddress(String street, String number, String city, String postcode) {
         this.street = street;
         this.number = number;
         this.city = city;
@@ -18,7 +18,7 @@ public class Address {
 
 
 
-    public Address(String jsonString) {
+    public CustomAddress(String jsonString) {
         int firstSeperator = jsonString.indexOf(";");
         int secondSeperator = jsonString.indexOf(";", firstSeperator + 1);
         int lastSeperator = jsonString.lastIndexOf(";");

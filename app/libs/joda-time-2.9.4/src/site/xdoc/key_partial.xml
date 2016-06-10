@@ -18,7 +18,7 @@ As such, they only <i>partially</i> represent a date or time in the datetime con
 </p>
 <p>
 The main implementations changed in version 1.3.
-This was to address implementation issues with the original design.
+This was to customAddress implementation issues with the original design.
 The previous classes - <code>TimeofDay</code> and <code>YearMonthDay</code> - are now effectively deprecated.
 The new implementations are <code>LocalDate</code>, <code>LocalTime</code> and <code>LocalDateTime</code>.
 </p>

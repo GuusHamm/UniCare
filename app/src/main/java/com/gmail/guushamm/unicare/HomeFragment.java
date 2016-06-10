@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
@@ -40,6 +41,7 @@ public class HomeFragment extends Fragment {
             nextAppointment = ((MainActivity)getActivity()).getCalendarEventList().get(0);
             if(nextAppointment != null)
             {
+                setRouteButton(nextAppointment.eventLocation);
                 String appointmentInfo = nextAppointment.title + ", " + nextAppointment.eventLocation;
                 TextView appointmentInfoText = (TextView) getView().findViewById(R.id.textAppointmentInfo);
                 TextView appointmentTimeText = (TextView) getView().findViewById(R.id.textAppointmentTime);
@@ -47,5 +49,20 @@ public class HomeFragment extends Fragment {
                 appointmentTimeText.setText(new SimpleDateFormat("dd/MM HH:mm").format(new Date(nextAppointment.dTStart)));
             }
         }
+    }
+
+    private void setRouteButton(final String location) {
+        ImageButton routeButton = (ImageButton) getActivity().findViewById(R.id.imagebuttonRoute);
+        routeButton.setVisibility(View.VISIBLE);
+
+        routeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                CustomAddress address = new CustomAddress();
+                System.out.println(location);
+                System.out.println();
+                ((MainActivity)getActivity()).openGoogleMaps(location);
+            }
+        });
     }
 }

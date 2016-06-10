@@ -2,7 +2,6 @@ package com.gmail.guushamm.unicare;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import static org.junit.Assert.assertEquals;
 
@@ -10,13 +9,13 @@ import static org.junit.Assert.assertEquals;
 /**
  * Created by Nekkyou on 2-6-2016.
  */
-public class AddressTest {
+public class CustomAddressTest {
     private String street;
     private String number;
     private String city;
 
-    private Address address;
-    private Address jsonAddress;
+    private CustomAddress customAddress;
+    private CustomAddress jsonCustomAddress;
 
     @Before
     public void before() {
@@ -24,15 +23,15 @@ public class AddressTest {
         number = "5";
         city = "Casteren";
 
-        address = new Address(street, number, city);
-        jsonAddress = new Address(address.toJson());
+        customAddress = new CustomAddress(street, number, city);
+        jsonCustomAddress = new CustomAddress(customAddress.toJson());
     }
 
     @Test
     public void checkAddress() {
-        assertEquals(jsonAddress.getStreet(), street);
-        assertEquals(jsonAddress.getNumber(), number);
-        assertEquals(jsonAddress.getCity(), city);
+        assertEquals(jsonCustomAddress.getStreet(), street);
+        assertEquals(jsonCustomAddress.getNumber(), number);
+        assertEquals(jsonCustomAddress.getCity(), city);
     }
 
 }
