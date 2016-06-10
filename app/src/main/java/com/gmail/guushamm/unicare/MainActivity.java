@@ -17,13 +17,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
+import me.everything.providers.android.calendar.CalendarProvider;
+import me.everything.providers.android.calendar.Event;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
-import me.everything.providers.android.calendar.CalendarProvider;
-import me.everything.providers.android.calendar.Event;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -269,7 +268,7 @@ public class MainActivity extends AppCompatActivity
 
 	public void fillEventList()
 	{
-		if(events != null)
+		if(events != null && !events.isEmpty())
 		{
 			events.clear();
 		}
