@@ -34,8 +34,8 @@ public class MainActivity extends AppCompatActivity
     private static final int MY_PERMISSIONS_REQUEST_READ_CALENDAR = 0;
     private static final int MY_PERMISSIONS_REQUEST_ACCESS_LOCATION = 1;
     private static List<Event> events;
-    private Address destination;
-    private Address origin;
+    private CustomAddress destination;
+    private CustomAddress origin;
     private boolean calendarPermission;
 
     @Override
@@ -158,12 +158,12 @@ public class MainActivity extends AppCompatActivity
             fragmentTransaction.addToBackStack("Video's");
             fragmentTransaction.replace(R.id.containerView, new YoutubePlayerFragment()).commit();
         } else if (id == R.id.nav_route) {
-            origin = new Address("kerkstraat", "5", "Casteren", "5529 AK");
-            destination = new Address("Michelangelolaan", "2", "Eindhoven", "5623 EJ");
+            origin = new CustomAddress("kerkstraat", "5", "Casteren", "5529 AK");
+            destination = new CustomAddress("Michelangelolaan", "2", "Eindhoven", "5623 EJ");
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, MY_PERMISSIONS_REQUEST_ACCESS_LOCATION);
 
             //Testing
-            Address test = new Address(destination.toJson());
+			CustomAddress test = new CustomAddress(destination.toJson());
             System.out.println("breakpoint test");
         } else if (id == R.id.nav_share) {
 
@@ -223,7 +223,7 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    public void openGoogleMaps(Address origin, Address destination) {
+    public void openGoogleMaps(CustomAddress destination) {
         // Ask permission if it's not set for location
         /*
 		if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
@@ -261,6 +261,7 @@ public class MainActivity extends AppCompatActivity
 		googleMapsString += destination;
 		Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(googleMapsString));
 		startActivity(intent);
+	}
 
     public boolean getCalendarPermission() {
         return calendarPermission;
