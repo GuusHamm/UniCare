@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import me.everything.providers.android.calendar.Event;
 
@@ -21,6 +23,9 @@ public class HomeFragment extends Fragment {
 
     private boolean calendarPermission;
     private Event nextAppointment;
+    private Timer timer;
+    private TimerTask timerTask;
+
 
     @Nullable
     @Override
@@ -28,6 +33,8 @@ public class HomeFragment extends Fragment {
         super.onCreate(savedInstanceState);
         // Inflate tab_layout and setup Views.
         final View view = inflater.inflate(R.layout.home_layout, null);
+
+
 
         return view;
     }
@@ -49,6 +56,38 @@ public class HomeFragment extends Fragment {
                 appointmentTimeText.setText(new SimpleDateFormat("dd/MM HH:mm").format(new Date(nextAppointment.dTStart)));
             }
         }
+
+        try {
+            timer = new Timer();
+            timerTask = new TimerTask() {
+                @Override
+                public void run() {
+                    updateUI();
+
+                }
+            };
+            timer.schedule(timerTask, 10000, 10000);
+        } catch (IllegalStateException e){
+            android.util.Log.i("Damn", "resume error");
+        }
+    }
+
+    private void updateUI()
+    {
+        getActivity().runOnUiThread(new Runnable(){
+            @Override
+            public void run(){
+                TextView factsText = (TextView) ((MainActivity)getActivity()).findViewById(R.id.factsText);
+                FactsProvider frehfgud = new FactsProvider();
+                factsText.setText(frehfgud.getRandomFact());
+            }
+        });
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        timer.cancel();
     }
 
     private void setRouteButton(final String location) {
