@@ -34,7 +34,7 @@ public class QueueFragment extends Fragment {
 		RequestQueue queue = Volley.newRequestQueue(view.getContext());
 
 //		This is the site that hosts our api, so we send a request to it to get the number of waiting people
-		String url = "http://www.guushamm.tech/unicare";
+		String url = "http://www.guushamm.tech/unicare/wait";
 
 		JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.GET, url, (String) null, new Response.Listener<JSONObject>() {
 
