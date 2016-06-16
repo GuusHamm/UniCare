@@ -33,6 +33,15 @@
             android:layout_below="@id/textAppointmentInfo"
             android:text="@string/home_notime"
             android:textColor="@color/colorWhite" />
+        <TextView
+            android:id="@+id/textAppointmentOvertime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@+id/textAppointmentTime"
+            android:layout_below="@id/textAppointmentInfo"
+            android:text="Onbekende Uitloop"
+            android:textColor="@color/colorWhite"/>
 
         <ImageButton
             android:visibility="invisible"
@@ -51,7 +60,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/relativeLayout"
-        android:layout_above="@+id/relativeLayout2"></RelativeLayout>
+        android:layout_above="@+id/relativeLayout2">
+    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
