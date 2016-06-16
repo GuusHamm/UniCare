@@ -28,4 +28,5 @@ dependencies {
     compile 'me.everything:providers-android:1.0.1'
     compile files('libs/joda-time-2.9.4/joda-time-2.9.4.jar')
     androidTestCompile 'junit:junit:4.12'
+    testCompile 'org.testng:testng:6.9.6'
 }
