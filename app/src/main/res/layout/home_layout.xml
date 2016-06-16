@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
-        android:padding="10dp"
+        android:padding="7dp"
         android:id="@+id/relativeLayout">
         <TextView
             android:id="@+id/textNextAppointment"
@@ -20,8 +20,6 @@
             android:id="@+id/textAppointmentInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
             android:layout_below="@+id/textNextAppointment"
             android:text="@string/home_noappointment"
             android:textSize="20sp"
@@ -61,19 +59,35 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/relativeLayout"
         android:layout_above="@+id/relativeLayout2">
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"></FrameLayout>
     </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="90dp"
+        android:layout_height="70dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/relativeLayout2">
+        android:id="@+id/relativeLayout2"
+        android:background="@color/colorPrimary">
+        <TextView
+            android:id="@+id/textDidyouknow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Wist je dat:"
+            android:textColor="@color/colorWhite"
+            android:textSize="20sp"
+            android:layout_marginLeft="5dp"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:id="@+id/factsText"/>
+            android:id="@+id/factsText"
+            android:layout_below="@id/textDidyouknow"
+            android:text="Geen feitjes gevonden"
+            android:textColor="@color/colorWhite"
+            android:layout_marginLeft="5dp"/>
     </RelativeLayout>
 
 </RelativeLayout>

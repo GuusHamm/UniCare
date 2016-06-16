@@ -86,6 +86,10 @@ public class HomeFragment extends Fragment {
 		});
 
 		queue.add(jsObjRequest);
+
+		TextView factsText = (TextView) view.findViewById(R.id.factsText);
+		FactsProvider factsProvider = new FactsProvider();
+		factsText.setText(factsProvider.getRandomFact());
 		return view;
 	}
 
