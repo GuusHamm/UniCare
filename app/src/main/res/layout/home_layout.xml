@@ -61,8 +61,11 @@
         android:layout_above="@+id/relativeLayout2">
 
         <FrameLayout
+            android:layout_margin="8dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"></FrameLayout>
+            android:layout_height="90dp"
+            android:background="@drawable/uwafspraak"
+            android:elevation="5dp"></FrameLayout>
     </RelativeLayout>
 
     <RelativeLayout
