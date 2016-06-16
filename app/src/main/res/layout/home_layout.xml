@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -54,19 +55,62 @@
             android:layout_alignParentEnd="true" />
 
     </RelativeLayout>
-    <RelativeLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/relativeLayout"
-        android:layout_above="@+id/relativeLayout2">
+        android:layout_above="@+id/relativeLayout2"
+        android:padding="8dp">
+        <android.support.percent.PercentRelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
 
-        <FrameLayout
-            android:layout_margin="8dp"
-            android:layout_width="wrap_content"
-            android:layout_height="90dp"
-            android:background="@drawable/uwafspraak"
-            android:elevation="5dp"></FrameLayout>
-    </RelativeLayout>
+            <FrameLayout
+                android:adjustViewBounds="true"
+                android:layout_height="100dp"
+                android:layout_width="0dp"
+                app:layout_widthPercent="100%"
+                android:layout_margin="8dp"
+                android:background="@drawable/uwafspraak4"
+                android:elevation="5dp"
+                android:layout_alignParentTop="true"
+                android:id="@+id/frameLayout"
+                android:scaleType="fitXY">
+            </FrameLayout>
+            <FrameLayout
+                android:adjustViewBounds="true"
+                android:id="@+id/frameNews"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                app:layout_widthPercent="47%"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="4dp"
+                android:background="@drawable/nieuws"
+                android:elevation="5dp"
+                android:layout_alignParentStart="true"
+                android:scaleType="fitXY"
+                android:layout_below="@+id/frameLayout"
+                />
+            <FrameLayout
+                android:adjustViewBounds="true"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                app:layout_widthPercent="47%"
+                android:background="@drawable/koffietile3"
+                android:elevation="5dp"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="8dp"
+                android:layout_below="@+id/frameLayout"
+                android:layout_toRightOf="@+id/frameNews"
+                android:id="@+id/frameLayout2"
+                android:scaleType="fitXY">
+            </FrameLayout>
+
+
+        </android.support.percent.PercentRelativeLayout>
+    </ScrollView>
+
 
     <RelativeLayout
         android:layout_width="match_parent"
