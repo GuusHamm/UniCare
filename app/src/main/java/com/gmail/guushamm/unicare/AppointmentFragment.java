@@ -105,7 +105,7 @@ public class AppointmentFragment extends Fragment {
 
 					endTime.setTime(new Date(beginTime.getTimeInMillis() + (qrCode.getInt("duration") * ONE_MINUTE_IN_MILLIS)));
 
-					String title = String.format("Afspraak met %s", qrCode.getString("doctor"));
+					String title = String.format("Afspraak met dokter %s", qrCode.getString("doctor"));
 
 					CustomAddress customAddress = new CustomAddress(qrCode.getString("location"));
 					System.out.println(customAddress.toString());

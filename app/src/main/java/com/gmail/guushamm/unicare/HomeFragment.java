@@ -33,7 +33,6 @@ public class HomeFragment extends Fragment {
 		// Inflate tab_layout and setup Views.
 		final View view = inflater.inflate(R.layout.home_layout, null);
 
-
 		return view;
 	}
 
