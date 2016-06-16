@@ -1,6 +1,7 @@
 package com.gmail.guushamm.unicare;
 
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -8,12 +9,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import me.everything.providers.android.calendar.Event;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import me.everything.providers.android.calendar.Event;
 
 /**
  * Created by Erwin on 26-5-2016.
@@ -33,6 +45,51 @@ public class HomeFragment extends Fragment {
 		// Inflate tab_layout and setup Views.
 		final View view = inflater.inflate(R.layout.home_layout, null);
 
+		RequestQueue queue = Volley.newRequestQueue(view.getContext());
+		String url = "http://www.guushamm.tech/unicare/wait";
+		JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.GET, url, (String) null, new Response.Listener<JSONObject>(){
+
+			@Override
+			public void onResponse(JSONObject response) {
+				final TextView waitTime = (TextView) view.findViewById(R.id.textAppointmentOvertime);
+				try {
+
+
+					final int[] toWaitTime = {response.getInt("wachttijd")};
+					waitTime.setText(String.format("(+%d min)", toWaitTime[0]));
+
+
+					CountDownTimer countDownTimer = new CountDownTimer((toWaitTime[0] * 60 * 1000),60000) {
+						@Override
+						public void onTick(long millisUntilFinished) {
+							toWaitTime[0]--;
+							waitTime.setText(String.format("(+%d min)", toWaitTime[0]));
+						}
+
+						@Override
+						public void onFinish() {
+							waitTime.setText(String.format("(+%d min)", 0));
+						}
+					}.start();
+
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+			}
+		}, new Response.ErrorListener() {
+
+			@Override
+			public void onErrorResponse(VolleyError error) {
+
+
+			}
+		});
+
+		queue.add(jsObjRequest);
+
+		TextView factsText = (TextView) view.findViewById(R.id.factsText);
+		FactsProvider factsProvider = new FactsProvider();
+		factsText.setText(factsProvider.getRandomFact());
 		return view;
 	}
 
@@ -68,6 +125,8 @@ public class HomeFragment extends Fragment {
 		} catch (IllegalStateException e) {
 			android.util.Log.i("Damn", "resume error");
 		}
+
+
 	}
 
 	private void updateUI() {
@@ -75,8 +134,8 @@ public class HomeFragment extends Fragment {
 			@Override
 			public void run() {
 				TextView factsText = (TextView) ((MainActivity) getActivity()).findViewById(R.id.factsText);
-				FactsProvider frehfgud = new FactsProvider();
-				factsText.setText(frehfgud.getRandomFact());
+				FactsProvider factsProvider = new FactsProvider();
+				factsText.setText(factsProvider.getRandomFact());
 			}
 		});
 	}

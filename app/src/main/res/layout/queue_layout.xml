@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:textSize="70dp"
-        android:textColor="#000000"
+        android:textColor="@color/colorPrimaryText"
         />
 
     <TextView
@@ -44,7 +44,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:textSize="70dp"
-        android:textColor="#000000"/>
+        android:textColor="@color/colorPrimaryText"/>
 
     <TextView
             android:id="@+id/waitTimeText"
@@ -64,5 +64,5 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:textSize="70dp"
-            android:textColor="#000000"/>
+            android:textColor="@color/colorPrimaryText"/>
 </LinearLayout>
