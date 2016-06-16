@@ -1,6 +1,7 @@
 package com.gmail.guushamm.unicare;
 
 import android.Manifest;
+import android.app.NotificationManager;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -102,6 +103,9 @@ public class MainActivity extends AppCompatActivity
 		fragmentManager = getSupportFragmentManager();
 		fragmentTransaction = fragmentManager.beginTransaction();
 		fragmentTransaction.replace(R.id.containerView, new HomeFragment()).commit();
+
+		NotificationController notificationController = new NotificationController(this);
+		notificationController.createNotification();
 	}
 
 	@Override

@@ -13,6 +13,7 @@ public class CustomAddressTest {
     private String street;
     private String number;
     private String city;
+    private String postcode;
 
     private CustomAddress customAddress;
     private CustomAddress jsonCustomAddress;
@@ -22,8 +23,9 @@ public class CustomAddressTest {
         street = "kerkstraat";
         number = "5";
         city = "Casteren";
+        postcode = "5529 AK";
 
-        customAddress = new CustomAddress(street, number, city);
+        customAddress = new CustomAddress(street, number, city, postcode);
         jsonCustomAddress = new CustomAddress(customAddress.toJson());
     }
 

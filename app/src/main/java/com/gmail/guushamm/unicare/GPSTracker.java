@@ -228,7 +228,7 @@ public class GPSTracker extends Service implements LocationListener {
         LatLong latLong = null;
         float radius = 0;
         long expireTime = 0;
-        PendingIntent intent = null;
+        PendingIntent pendingIntent = null;
 
         Geocoder geocoder = new Geocoder(mContext);
         List<Address> addresses;
@@ -256,7 +256,11 @@ public class GPSTracker extends Service implements LocationListener {
             // for ActivityCompat#requestPermissions for more details.
             return;
         }
-        locationManager.addProximityAlert(latLong.getLatitude(), latLong.getLongitude(), 100, -1, intent);
+
+        Intent intent = new Intent(mContext, MainActivity.class);
+        pendingIntent = PendingIntent.getActivity(mContext, 0, intent, 0);
+
+        locationManager.addProximityAlert(latLong.getLatitude(), latLong.getLongitude(), 100, -1, pendingIntent);
     }
 
 
