@@ -3,9 +3,14 @@ package com.gmail.guushamm.unicare;
 import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.TextView;
-import com.android.volley.*;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.json.JSONException;
@@ -24,6 +29,7 @@ public class QueueController {
 	private static TextView waitingTextView;
 	private static TextView appointmentTimeTextView;
 	private static TextView waitTimeTextView;
+	private static TextView homeTimeTextView;
 
 
 	private static QueueController instance;
@@ -32,6 +38,7 @@ public class QueueController {
 		waitingTextView = (TextView) view.findViewById(R.id.peopleWaiting);
 		appointmentTimeTextView = (TextView) view.findViewById(R.id.appointmentTime);
 		waitTimeTextView = (TextView) view.findViewById(R.id.waitTime);
+		homeTimeTextView = (TextView) view.findViewById(R.id.textAppointmentOvertime);
 
 		if (instance == null){
 			instance = new QueueController(view);
@@ -122,6 +129,10 @@ public class QueueController {
 
 		if (appointmentTimeTextView != null){
 			appointmentTimeTextView.setText(String.format("%s",appointmentTime));
+		}
+
+		if(homeTimeTextView != null){
+			homeTimeTextView.setText(String.format("(+%d min)", waitTime));
 		}
 
 	}
