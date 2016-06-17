@@ -23,6 +23,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+            <receiver android:name="com.gmail.guushamm.unicare.AlarmReceiver" android:enabled="true" />
         </activity>
     </application>
 

@@ -107,7 +107,7 @@ public class MainActivity extends AppCompatActivity
 		fragmentTransaction.replace(R.id.containerView, new HomeFragment()).commit();
 
 		NotificationController notificationController = new NotificationController(this);
-		notificationController.createNotification();
+		notificationController.startAlarm();
 	}
 
 	@Override
