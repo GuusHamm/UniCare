@@ -123,7 +123,7 @@ public class QueueController {
 			waitingTextView.setText(String.format("%d",waiting));
 		}
 
-		if (waitingTextView != null){
+		if (waitTimeTextView != null){
 			waitTimeTextView.setText(String.format("%d min", waitTime));
 		}
 
