@@ -1,12 +1,14 @@
 package com.gmail.guushamm.unicare;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
@@ -26,8 +28,7 @@ import java.util.List;
 import me.everything.providers.android.calendar.CalendarProvider;
 import me.everything.providers.android.calendar.Event;
 
-public class MainActivity extends AppCompatActivity
-		implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends FragmentActivity implements NavigationView.OnNavigationItemSelectedListener {
 
 	FragmentManager fragmentManager;
 	FragmentTransaction fragmentTransaction;
@@ -44,22 +45,22 @@ public class MainActivity extends AppCompatActivity
 		super.onCreate(savedInstanceState);
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_main);
-		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-		setSupportActionBar(toolbar);
+		//Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+		//setSupportActionBar(toolbar);
 		events = new ArrayList<Event>();
 		ActivityCompat.requestPermissions(this,
 				new String[]{Manifest.permission.READ_CALENDAR},
 				MY_PERMISSIONS_REQUEST_READ_CALENDAR);
 
-		DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-		ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-				this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-		drawer.setDrawerListener(toggle);
-		toggle.syncState();
+		//DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+		//ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+		//		this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+		//drawer.setDrawerListener(toggle);
+		//toggle.syncState();
 
-		navigationView = (NavigationView) findViewById(R.id.nav_view);
-		navigationView.setNavigationItemSelectedListener(this);
-		navigationView.getMenu().getItem(0).setChecked(true);
+		//navigationView = (NavigationView) findViewById(R.id.nav_view);
+		//navigationView.setNavigationItemSelectedListener(this);
+		//navigationView.getMenu().getItem(0).setChecked(true);
 
 		// Select current menu item
 		getSupportFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
