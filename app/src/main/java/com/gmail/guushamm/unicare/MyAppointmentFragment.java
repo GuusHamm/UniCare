@@ -36,9 +36,16 @@ public class MyAppointmentFragment extends Fragment {
 			int randomNumber = new Random().nextInt(appointmentTypes.size());
 			String dokter = nextAppointment.title;
 
+			System.out.println(nextAppointment.eventLocation);
+//			Antoon Coolenlaan 1, 5644 RX Eindhoven
+
+			String funFact = "";
+			if (nextAppointment.eventLocation.equals("Michelangelolaan 2, 5623 EJ Eindhoven")){
+				funFact = "\n\nFun fact: Dit ziekenhuis staat op nummer 1 van de kwaliteitsnormen-ranking van Zorgverzekeraars Nederland";
+			}
 			dokter = dokter.substring(dokter.lastIndexOf(" ")+1);
 			textView.setText(dokter);
-			textView.setText(String.format("U heeft een afspraak voor %s met dokter %s. De afspraak duurt gemiddelt %s minuten, %s zal tijdens deze afspraak worden uitgevoerd",appointmentTypes.get(randomNumber),dokter,appointmentTypes.getValue(randomNumber)[0],appointmentTypes.getValue(randomNumber)[1]));
+			textView.setText(String.format("U heeft een afspraak voor %s met dokter %s. De afspraak duurt gemiddeld %s minuten, %s zal tijdens deze afspraak worden uitgevoerd.%s",appointmentTypes.get(randomNumber),dokter,appointmentTypes.getValue(randomNumber)[0],appointmentTypes.getValue(randomNumber)[1],funFact));
 		}
 
 		return view;

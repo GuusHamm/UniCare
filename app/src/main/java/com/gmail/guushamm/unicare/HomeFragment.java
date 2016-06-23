@@ -93,7 +93,7 @@ public class HomeFragment extends Fragment {
 		frameNews.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				String url = "http://www.nu.nl/gezondheid";
+				String url = "http://www.st-anna.nl/uw-mening.html";
 				Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
 				startActivity(i);
 			}
