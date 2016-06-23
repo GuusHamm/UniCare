@@ -9,11 +9,21 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.gmail.guushamm.unicare.Alarm.ScheduleClient;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
+
 import me.everything.providers.android.calendar.Event;
 
 import java.text.SimpleDateFormat;
@@ -74,14 +84,23 @@ public class HomeFragment extends Fragment {
 		frameNews.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				String url = "http://www.nu.nl/gezondheid";
-				Intent i = new Intent(Intent.ACTION_VIEW,Uri.parse(url));
-				startActivity(i);
+//				String url = "http://www.nu.nl/gezondheid";
+//				Intent i = new Intent(Intent.ACTION_VIEW,Uri.parse(url));
+//				startActivity(i);
+				setAlarm();
 			}
 		});
 
 		return view;
 	}
+
+	private void setAlarm() {
+		MainActivity main = (MainActivity) getActivity();
+		ScheduleClient scheduleClient = new ScheduleClient(main);
+		scheduleClient.doBindService();
+		Toast.makeText(main, "Alarm set", Toast.LENGTH_SHORT).show();
+	}
+
 
 	@Override
 	public void onResume() {

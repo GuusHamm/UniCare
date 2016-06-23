@@ -19,10 +19,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 import me.everything.providers.android.calendar.CalendarProvider;
 import me.everything.providers.android.calendar.Event;
+
+import com.gmail.guushamm.unicare.Alarm.ScheduleClient;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -110,10 +114,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 		NotificationController notificationController = new NotificationController(this);
 		notificationController.startAlarm();
 
-		startAlarm();
 
 		GPSTracker tracker = new GPSTracker(this, this);
 		tracker.createProxyAlert("De Run 4600, 5504 DB Veldhoven");
+
+
 	}
 
 	public void createActualAlert(LocationManager locationManager, LatLong latLong, PendingIntent pendingIntent) {
@@ -128,9 +133,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 	}
 
 
-	public void startAlarm(){
-
-	}
 
 	@Override
 	public void onBackPressed() {
