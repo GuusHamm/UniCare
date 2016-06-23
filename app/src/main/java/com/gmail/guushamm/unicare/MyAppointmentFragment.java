@@ -10,6 +10,7 @@ import android.widget.TextView;
 import me.everything.providers.android.calendar.Event;
 import org.apache.commons.collections4.map.LinkedMap;
 
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -23,7 +24,10 @@ public class MyAppointmentFragment extends Fragment {
 		// Inflate tab_layout and setup Views.
 		final View view = inflater.inflate(R.layout.my_appointment_layout, null);
 
-
+		List<Event> calanderList = ((MainActivity) getActivity()).getCalendarEventList();
+		if (calanderList.isEmpty()) {
+			return null;
+		}
 		Event nextAppointment = ((MainActivity) getActivity()).getCalendarEventList().get(0);
 
 		if (nextAppointment != null){
