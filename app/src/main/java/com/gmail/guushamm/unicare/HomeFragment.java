@@ -1,7 +1,5 @@
 package com.gmail.guushamm.unicare;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -9,21 +7,10 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.widget.FrameLayout;
-import android.widget.ImageButton;
-import android.widget.TextView;
-import android.widget.Toast;
-
+import android.widget.*;
 import com.gmail.guushamm.unicare.Alarm.ScheduleClient;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Timer;
-import java.util.TimerTask;
-
 import me.everything.providers.android.calendar.Event;
 
 import java.text.SimpleDateFormat;
@@ -73,11 +60,21 @@ public class HomeFragment extends Fragment {
 		frameAfspraken.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				fragmentTransaction.addToBackStack("Mijn afspraak");
-				fragmentTransaction.replace(R.id.containerView, new MyAppointmentFragment()).commitAllowingStateLoss();
+				fragmentTransaction.addToBackStack("Afspraken");
+				fragmentTransaction.replace(R.id.containerView, new AppointmentFragment()).commitAllowingStateLoss();
 			}
 		});
 
+
+		RelativeLayout relativeLayout = (RelativeLayout) view.findViewById(R.id.relativeLayout);
+
+		relativeLayout.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				fragmentTransaction.addToBackStack("Mij  afspraak");
+				fragmentTransaction.replace(R.id.containerView, new MyAppointmentFragment()).commitAllowingStateLoss();
+			}
+		});
 
 		FrameLayout frameNews = (FrameLayout) view.findViewById(R.id.frameNews);
 

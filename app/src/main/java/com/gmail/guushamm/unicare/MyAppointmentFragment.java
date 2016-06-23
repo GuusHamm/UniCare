@@ -28,16 +28,17 @@ public class MyAppointmentFragment extends Fragment {
 
 		if (nextAppointment != null){
 			TextView textView = (TextView) view.findViewById(R.id.my_appointment_textview);
-			LinkedMap<String,String> appointmentTypes = new LinkedMap<>();
-			appointmentTypes.put("Acne","Een behandeling met vloeibare stikstof");
-			appointmentTypes.put("een verdachte moedervlek","Een controle van de moedervlek");
+			LinkedMap<String,String[]> appointmentTypes = new LinkedMap<>();
+			appointmentTypes.put("acne", new String[]{"60","Een behandeling met vloeibare stikstof"});
+			appointmentTypes.put("een verdachte moedervlek",new String[]{"15","Een controle van de moedervlek"});
+			appointmentTypes.put("diabetes onderzoek",new String[]{"30","Een preventief diabetes onderzoek"});
 
 			int randomNumber = new Random().nextInt(appointmentTypes.size());
 			String dokter = nextAppointment.title;
 
-			dokter = dokter.substring(dokter.lastIndexOf(" "));
+			dokter = dokter.substring(dokter.lastIndexOf(" ")+1);
 			textView.setText(dokter);
-			textView.setText(String.format("U heeft een afspraak voor %s met dokter %s. De afspraak duurt gemiddelt 35 minuten, %s zal tijdens deze afspraak worden uitgevoerd",appointmentTypes.get(randomNumber),dokter,appointmentTypes.getValue(randomNumber)));
+			textView.setText(String.format("U heeft een afspraak voor %s met dokter %s. De afspraak duurt gemiddelt %s minuten, %s zal tijdens deze afspraak worden uitgevoerd",appointmentTypes.get(randomNumber),dokter,appointmentTypes.getValue(randomNumber)[0],appointmentTypes.getValue(randomNumber)[1]));
 		}
 
 		return view;
