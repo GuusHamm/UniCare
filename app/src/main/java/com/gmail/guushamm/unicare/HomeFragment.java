@@ -1,5 +1,7 @@
 package com.gmail.guushamm.unicare;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -71,7 +73,7 @@ public class HomeFragment extends Fragment {
 		relativeLayout.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				fragmentTransaction.addToBackStack("Mij  afspraak");
+				fragmentTransaction.addToBackStack("Mijn  afspraak");
 				fragmentTransaction.replace(R.id.containerView, new MyAppointmentFragment()).commitAllowingStateLoss();
 			}
 		});
@@ -81,12 +83,22 @@ public class HomeFragment extends Fragment {
 		frameNews.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-//				String url = "http://www.nu.nl/gezondheid";
-//				Intent i = new Intent(Intent.ACTION_VIEW,Uri.parse(url));
-//				startActivity(i);
-				setAlarm();
+				String url = "http://www.nu.nl/gezondheid";
+				Intent i = new Intent(Intent.ACTION_VIEW,Uri.parse(url));
+				startActivity(i);
 			}
 		});
+
+		FrameLayout frameLayout = (FrameLayout) view.findViewById(R.id.frameEnquete);
+		frameNews.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				String url = "http://www.nu.nl/gezondheid";
+				Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+				startActivity(i);
+			}
+		});
+
 
 		return view;
 	}
