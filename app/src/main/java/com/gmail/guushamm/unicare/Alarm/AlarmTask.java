@@ -17,18 +17,27 @@ public class AlarmTask implements Runnable {
     private final AlarmManager am;
     // Your context to retrieve the alarm manager from
     private final Context context;
+    private boolean isNow;
 
-    public AlarmTask(Context context, Calendar date) {
+    public AlarmTask(Context context, Calendar date, boolean now) {
         this.context = context;
         this.am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         this.date = date;
+//        this.date = Calendar.getInstance();
+//        date.add(Calendar.SECOND, 5);
+        isNow = now;
     }
 
     @Override
     public void run() {
         // Request to start are service when the alarm date is upon us
         // We don't start an activity as we just want to pop up a notification into the system bar not a full activity
-        Intent intent = new Intent(context, NotifyService.class);
+        Intent intent;
+        if (isNow) {
+            intent = new Intent(context, NotifyServiceNow.class);
+        } else {
+            intent = new Intent(context, NotifyService.class);
+        }
         intent.putExtra(NotifyService.INTENT_NOTIFY, true);
         PendingIntent pendingIntent = PendingIntent.getService(context, 0, intent, 0);
 

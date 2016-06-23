@@ -61,17 +61,11 @@ public class NotifyService extends Service {
      * Creates a notification and shows it in the OS drag-down status bar
      */
     private void showNotification() {
-        // This is the 'title' of the notification
-        CharSequence title = "Alarm!!";
-        // This is the icon to use on the notification
-        int icon = R.mipmap.ic_launcher;
-        // This is the scrolling text of the notification
-        CharSequence text = "Your notification time is upon us.";
-        // What time to show on the notification
+        int icon = R.drawable.ic_logo_unicare;
         long time = System.currentTimeMillis();
 
         Notification.Builder mBuilder = new Notification.Builder(getApplicationContext());
-        mBuilder.setSmallIcon(R.mipmap.ic_launcher);
+        mBuilder.setSmallIcon(icon);
         mBuilder.setContentTitle("Remember your appointment");
         mBuilder.setContentText("You have an appointment in 2 hours");
         mBuilder.setContentIntent(PendingIntent.getActivity(this, 0, new Intent(this, MainActivity.class), 0));

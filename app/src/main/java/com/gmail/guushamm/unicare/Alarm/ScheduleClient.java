@@ -16,9 +16,11 @@ public class ScheduleClient {
     private Context context;
     private  ScheduleService mBoundService;
     private boolean mIsBound;
+    private Calendar calendar;
 
-    public ScheduleClient(Context context) {
+    public ScheduleClient(Context context, Calendar calendar) {
         this.context = context;
+        this.calendar = calendar;
     }
 
     public void doBindService() {
@@ -32,9 +34,14 @@ public class ScheduleClient {
             // giving us the service object we can use to interact with our service.
             mBoundService = ((ScheduleService.ServiceBinder) service).getService();
 
-            Calendar c = Calendar.getInstance();
-            c.add(Calendar.SECOND, 10);
-            mBoundService.setAlarm(c);
+//            Calendar c = Calendar.getInstance();
+//            c.add(Calendar.SECOND, 10);
+            calendar.add(Calendar.HOUR, -2);
+
+            mBoundService.setAlarm(calendar);
+//            mBoundService.setAlarmNow();
+
+            Toast.makeText(context, "Alarm set", Toast.LENGTH_SHORT).show();
         }
 
         public void onServiceDisconnected(ComponentName className) {

@@ -103,12 +103,7 @@ public class HomeFragment extends Fragment {
 		return view;
 	}
 
-	private void setAlarm() {
-		MainActivity main = (MainActivity) getActivity();
-		ScheduleClient scheduleClient = new ScheduleClient(main);
-		scheduleClient.doBindService();
-		Toast.makeText(main, "Alarm set", Toast.LENGTH_SHORT).show();
-	}
+
 
 
 	@Override

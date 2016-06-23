@@ -40,7 +40,14 @@ public class ScheduleService extends Service {
      * Show an alarm for a certain date when the alarm is called it will pop up a notification
      */
     public void setAlarm(Calendar c) {
-        AlarmTask task = new AlarmTask(this, c);
+        AlarmTask task = new AlarmTask(this, c, false);
+        task.run();
+    }
+
+    public void setAlarmNow() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.SECOND, 1);
+        AlarmTask task = new AlarmTask(this, calendar, true);
         task.run();
     }
 }

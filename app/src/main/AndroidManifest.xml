@@ -27,6 +27,7 @@
 
         <service android:name="com.gmail.guushamm.unicare.Alarm.ScheduleService" android:enabled="true"/>
         <service android:name="com.gmail.guushamm.unicare.Alarm.NotifyService" android:enabled="true"/>
+        <service android:name="com.gmail.guushamm.unicare.Alarm.NotifyServiceNow" android:enabled="true" />
     </application>
 
 </manifest>

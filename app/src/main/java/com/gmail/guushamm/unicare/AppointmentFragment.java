@@ -15,6 +15,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.gmail.guushamm.unicare.Alarm.ScheduleClient;
+
 import me.everything.providers.android.calendar.Event;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -102,6 +105,8 @@ public class AppointmentFragment extends Fragment {
 
 					beginTime.set(qrCode.getInt("year"), qrCode.getInt("month") - 1, qrCode.getInt("day"), qrCode.getInt("hour"), qrCode.getInt("minute"));
 
+					setAlarm(beginTime);
+
 					Calendar endTime = Calendar.getInstance();
 
 					endTime.setTime(new Date(beginTime.getTimeInMillis() + (qrCode.getInt("duration") * ONE_MINUTE_IN_MILLIS)));
@@ -138,6 +143,12 @@ public class AppointmentFragment extends Fragment {
 				//handle cancel
 			}
 		}
+	}
+
+	private void setAlarm(Calendar calendar) {
+		MainActivity main = (MainActivity) getActivity();
+		ScheduleClient scheduleClient = new ScheduleClient(main, calendar);
+		scheduleClient.doBindService();
 	}
 
 

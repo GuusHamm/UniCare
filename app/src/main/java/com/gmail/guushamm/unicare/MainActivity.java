@@ -118,10 +118,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 		fragmentTransaction = fragmentManager.beginTransaction();
 		fragmentTransaction.replace(R.id.containerView, new HomeFragment()).commit();
 
-		NotificationController notificationController = new NotificationController(this);
-		notificationController.startAlarm();
-
-
 		GPSTracker tracker = new GPSTracker(this, this);
 		tracker.createProxyAlert("De Run 4600, 5504 DB Veldhoven");
 
