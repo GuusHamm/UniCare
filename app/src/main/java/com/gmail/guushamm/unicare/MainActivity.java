@@ -14,6 +14,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
@@ -25,7 +28,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class MainActivity extends FragmentActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
 	FragmentManager fragmentManager;
 	FragmentTransaction fragmentTransaction;
@@ -42,22 +45,22 @@ public class MainActivity extends FragmentActivity implements NavigationView.OnN
 		super.onCreate(savedInstanceState);
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_main);
-		//Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-		//setSupportActionBar(toolbar);
+		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+		setSupportActionBar(toolbar);
 		events = new ArrayList<Event>();
 		ActivityCompat.requestPermissions(this,
 				new String[]{Manifest.permission.READ_CALENDAR},
 				MY_PERMISSIONS_REQUEST_READ_CALENDAR);
 
-		//DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-		//ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-		//		this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-		//drawer.setDrawerListener(toggle);
-		//toggle.syncState();
+		DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+		ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+				this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+		drawer.setDrawerListener(toggle);
+		toggle.syncState();
 
-		//navigationView = (NavigationView) findViewById(R.id.nav_view);
-		//navigationView.setNavigationItemSelectedListener(this);
-		//navigationView.getMenu().getItem(0).setChecked(true);
+		navigationView = (NavigationView) findViewById(R.id.nav_view);
+		navigationView.setNavigationItemSelectedListener(this);
+		navigationView.getMenu().getItem(0).setChecked(true);
 
 		// Select current menu item
 		getSupportFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
@@ -68,33 +71,33 @@ public class MainActivity extends FragmentActivity implements NavigationView.OnN
 				for (int entry = 0; entry < fm.getBackStackEntryCount(); entry++) {
 					stackName = fm.getBackStackEntryAt(entry).getName();
 				}
-//				if (stackName != null) {
-//					switch (stackName) {
-//						case "Start":
-//							navigationView.getMenu().getItem(0).setChecked(true);
-//							setTitle(navigationView.getMenu().getItem(0).getTitle());
-//							break;
-//						case "Afspraken":
-//							navigationView.getMenu().getItem(1).setChecked(true);
-//							setTitle(navigationView.getMenu().getItem(1).getTitle());
-//							break;
-//						case "Wachtrij":
-//							navigationView.getMenu().getItem(2).setChecked(true);
-//							setTitle(navigationView.getMenu().getItem(2).getTitle());
-//							break;
-//						case "Video's":
-//							navigationView.getMenu().getItem(3).setChecked(true);
-//							setTitle(navigationView.getMenu().getItem(3).getTitle());
-//							break;
-//						default:
-////							navigationView.getMenu().getItem(0).setChecked(true);
-////							setTitle(navigationView.getMenu().getItem(0).getTitle());
-//							break;
-//					}
-//				} else {
-//					navigationView.getMenu().getItem(0).setChecked(true);
-//					setTitle(navigationView.getMenu().getItem(0).getTitle());
-//				}
+				if (stackName != null) {
+					switch (stackName) {
+						case "Start":
+							navigationView.getMenu().getItem(0).setChecked(true);
+							setTitle(navigationView.getMenu().getItem(0).getTitle());
+							break;
+						case "Afspraken":
+							navigationView.getMenu().getItem(1).setChecked(true);
+							setTitle(navigationView.getMenu().getItem(1).getTitle());
+							break;
+						case "Wachtrij":
+							navigationView.getMenu().getItem(2).setChecked(true);
+							setTitle(navigationView.getMenu().getItem(2).getTitle());
+							break;
+						case "Video's":
+							navigationView.getMenu().getItem(3).setChecked(true);
+							setTitle(navigationView.getMenu().getItem(3).getTitle());
+							break;
+						default:
+							navigationView.getMenu().getItem(0).setChecked(true);
+							setTitle(navigationView.getMenu().getItem(0).getTitle());
+							break;
+					}
+				} else {
+					navigationView.getMenu().getItem(0).setChecked(true);
+					setTitle(navigationView.getMenu().getItem(0).getTitle());
+				}
 
 			}
 		});
@@ -104,8 +107,8 @@ public class MainActivity extends FragmentActivity implements NavigationView.OnN
 		fragmentTransaction = fragmentManager.beginTransaction();
 		fragmentTransaction.replace(R.id.containerView, new HomeFragment()).commit();
 
-//		NotificationController notificationController = new NotificationController(this);
-//		notificationController.startAlarm();
+		NotificationController notificationController = new NotificationController(this);
+		notificationController.startAlarm();
 
 		startAlarm();
 
@@ -326,5 +329,6 @@ public class MainActivity extends FragmentActivity implements NavigationView.OnN
 		GPSTracker gpsTracker = new GPSTracker(this);
 		gpsTracker.createProxyAlert("");
 	}
+
 
 }
