@@ -1,117 +1,140 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        android:padding="7dp"
-        android:id="@+id/relativeLayout">
-        <TextView
-            android:id="@+id/textNextAppointment"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/home_nextappointment"
-            android:textColor="@color/colorWhite"/>
+            android:background="@color/colorPrimary"
+            android:padding="7dp"
+            android:id="@+id/relativeLayout">
+
         <TextView
-            android:id="@+id/textAppointmentInfo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/textNextAppointment"
-            android:text="@string/home_noappointment"
-            android:textSize="20sp"
-            android:textColor="@color/colorWhite"/>
+                android:id="@+id/textNextAppointment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/home_nextappointment"
+                android:textColor="@color/colorWhite"/>
+
         <TextView
-            android:id="@+id/textAppointmentTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/textAppointmentInfo"
-            android:text="@string/home_notime"
-            android:textColor="@color/colorWhite" />
+                android:id="@+id/textAppointmentInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textNextAppointment"
+                android:text="@string/home_noappointment"
+                android:textSize="20sp"
+                android:textColor="@color/colorWhite"/>
+
         <TextView
-            android:id="@+id/textAppointmentOvertime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_toRightOf="@+id/textAppointmentTime"
-            android:layout_below="@id/textAppointmentInfo"
-            android:text="Onbekende Uitloop"
-            android:textColor="@color/colorWhite"/>
+                android:id="@+id/textAppointmentTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textAppointmentInfo"
+                android:text="@string/home_notime"
+                android:textColor="@color/colorWhite"/>
+
+        <TextView
+                android:id="@+id/textAppointmentOvertime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@+id/textAppointmentTime"
+                android:layout_below="@id/textAppointmentInfo"
+                android:text="Onbekende Uitloop"
+                android:textColor="@color/colorWhite"/>
 
         <ImageButton
-            android:visibility="invisible"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:id="@+id/imagebuttonRoute"
-            android:src="@drawable/ic_map_75dp"
-            android:tint="@color/colorWhite"
-            android:scaleType="fitCenter"
-            android:background="@color/colorPrimaryDark"
-            android:layout_centerVertical="true"
-            android:layout_alignParentEnd="true" />
+                android:visibility="invisible"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:id="@+id/imagebuttonRoute"
+                android:src="@drawable/ic_map_75dp"
+                android:tint="@color/colorWhite"
+                android:scaleType="fitCenter"
+                android:background="@color/colorPrimaryDark"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"/>
 
     </RelativeLayout>
+
     <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/relativeLayout"
-        android:layout_above="@+id/relativeLayout2"
-        android:padding="4dp">
-        <android.support.percent.PercentRelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            >
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/relativeLayout"
+            android:layout_above="@+id/relativeLayout2"
+            android:padding="4dp">
+
+        <android.support.percent.PercentRelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
 
             <FrameLayout
-                android:adjustViewBounds="true"
-                android:layout_height="100dp"
-                android:layout_width="0dp"
-                app:layout_widthPercent="100%"
-                android:layout_margin="2dp"
-                android:background="@drawable/uwafspraak4"
-                android:elevation="5dp"
-                android:layout_alignParentTop="true"
-                android:id="@+id/frameLayout"
-                android:scaleType="fitXY">
+                    android:adjustViewBounds="true"
+                    android:layout_height="100dp"
+                    android:layout_width="0dp"
+                    app:layout_widthPercent="100%"
+                    android:layout_margin="2dp"
+                    android:background="@drawable/uwafspraak4"
+                    android:elevation="5dp"
+                    android:layout_alignParentTop="true"
+                    android:id="@+id/frameAfspraken"
+                    android:scaleType="fitXY">
             </FrameLayout>
+
             <FrameLayout
-                android:adjustViewBounds="true"
-                android:id="@+id/frameNews"
-                android:layout_width="0dp"
-                android:layout_height="100dp"
-                app:layout_widthPercent="50%"
-                android:layout_margin="2dp"
-                android:background="@drawable/nieuws"
-                android:elevation="5dp"
-                android:layout_alignParentStart="true"
-                android:scaleType="fitXY"
-                android:layout_below="@+id/frameLayout"
-                />
+                    android:adjustViewBounds="true"
+                    android:id="@+id/frameNews"
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    app:layout_widthPercent="50%"
+                    android:layout_margin="2dp"
+                    android:background="@drawable/nieuws"
+                    android:elevation="5dp"
+                    android:layout_alignParentStart="true"
+                    android:scaleType="fitXY"
+                    android:layout_below="@+id/frameAfspraken"
+                    />
+
             <FrameLayout
-                android:adjustViewBounds="true"
-                android:layout_width="0dp"
-                android:layout_height="100dp"
-                app:layout_widthPercent="50%"
-                android:layout_margin="2dp"
-                android:layout_marginLeft="0dp"
-                android:background="@drawable/koffietile3"
-                android:elevation="5dp"
-                android:layout_below="@+id/frameLayout"
-                android:layout_toRightOf="@+id/frameNews"
-                android:id="@+id/frameLayout2"
-                android:scaleType="fitXY">
+                    android:adjustViewBounds="true"
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    app:layout_widthPercent="50%"
+                    android:layout_margin="2dp"
+                    android:layout_marginLeft="0dp"
+                    android:background="@drawable/koffietile3"
+                    android:elevation="5dp"
+                    android:layout_below="@+id/frameAfspraken"
+                    android:layout_toRightOf="@+id/frameNews"
+                    android:id="@+id/frameLayout2"
+                    android:scaleType="fitXY">
             </FrameLayout>
+            <!--<FrameLayout-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="200dp"-->
+            <!--app:layout_widthPercent="100%"-->
+            <!--android:layout_below="@id/frameNews"-->
+            <!--android:layout_margin="2dp">-->
+            <!--</FrameLayout>-->
+
             <FrameLayout
-                android:layout_width="0dp"
-                android:layout_height="200dp"
-                app:layout_widthPercent="100%"
-                android:layout_below="@id/frameNews"
-                android:layout_margin="2dp">
+                    android:layout_width="0dp"
+                    android:layout_height="250dp"
+                    app:layout_widthPercent="100%"
+                    android:layout_below="@id/frameLayout2"
+                    android:layout_margin="2dp"
+                    android:elevation="5dp">
+                <WebView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/YoutubeView">
+                </WebView>
             </FrameLayout>
+
 
 
         </android.support.percent.PercentRelativeLayout>
@@ -119,28 +142,30 @@
 
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/relativeLayout2"
-        android:background="@color/colorPrimary">
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:id="@+id/relativeLayout2"
+            android:background="@color/colorPrimary">
+
         <TextView
-            android:id="@+id/textDidyouknow"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Wist je dat:"
-            android:textColor="@color/colorWhite"
-            android:textSize="20sp"
-            android:layout_marginLeft="5dp"/>
+                android:id="@+id/textDidyouknow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Wist je dat:"
+                android:textColor="@color/colorWhite"
+                android:textSize="20sp"
+                android:layout_marginLeft="5dp"/>
+
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/factsText"
-            android:layout_below="@id/textDidyouknow"
-            android:text="Geen feitjes gevonden"
-            android:textColor="@color/colorWhite"
-            android:layout_marginLeft="5dp"/>
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/factsText"
+                android:layout_below="@id/textDidyouknow"
+                android:text="Geen feitjes gevonden"
+                android:textColor="@color/colorWhite"
+                android:layout_marginLeft="5dp"/>
     </RelativeLayout>
 
 </RelativeLayout>

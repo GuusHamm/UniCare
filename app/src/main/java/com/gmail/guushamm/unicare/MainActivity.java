@@ -1,19 +1,10 @@
 package com.gmail.guushamm.unicare;
 
 import android.Manifest;
-import android.app.AlarmManager;
-import android.app.Notification;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.app.Activity;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.location.LocationManager;
-import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -21,24 +12,18 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.app.LoaderManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
 import android.widget.Toast;
-
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Iterator;
-import java.util.List;
-
 import me.everything.providers.android.calendar.CalendarProvider;
 import me.everything.providers.android.calendar.Event;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 public class MainActivity extends FragmentActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -83,33 +68,33 @@ public class MainActivity extends FragmentActivity implements NavigationView.OnN
 				for (int entry = 0; entry < fm.getBackStackEntryCount(); entry++) {
 					stackName = fm.getBackStackEntryAt(entry).getName();
 				}
-				if (stackName != null) {
-					switch (stackName) {
-						case "Start":
-							navigationView.getMenu().getItem(0).setChecked(true);
-							setTitle(navigationView.getMenu().getItem(0).getTitle());
-							break;
-						case "Afspraken":
-							navigationView.getMenu().getItem(1).setChecked(true);
-							setTitle(navigationView.getMenu().getItem(1).getTitle());
-							break;
-						case "Wachtrij":
-							navigationView.getMenu().getItem(2).setChecked(true);
-							setTitle(navigationView.getMenu().getItem(2).getTitle());
-							break;
-						case "Video's":
-							navigationView.getMenu().getItem(3).setChecked(true);
-							setTitle(navigationView.getMenu().getItem(3).getTitle());
-							break;
-						default:
-							navigationView.getMenu().getItem(0).setChecked(true);
-							setTitle(navigationView.getMenu().getItem(0).getTitle());
-							break;
-					}
-				} else {
-					navigationView.getMenu().getItem(0).setChecked(true);
-					setTitle(navigationView.getMenu().getItem(0).getTitle());
-				}
+//				if (stackName != null) {
+//					switch (stackName) {
+//						case "Start":
+//							navigationView.getMenu().getItem(0).setChecked(true);
+//							setTitle(navigationView.getMenu().getItem(0).getTitle());
+//							break;
+//						case "Afspraken":
+//							navigationView.getMenu().getItem(1).setChecked(true);
+//							setTitle(navigationView.getMenu().getItem(1).getTitle());
+//							break;
+//						case "Wachtrij":
+//							navigationView.getMenu().getItem(2).setChecked(true);
+//							setTitle(navigationView.getMenu().getItem(2).getTitle());
+//							break;
+//						case "Video's":
+//							navigationView.getMenu().getItem(3).setChecked(true);
+//							setTitle(navigationView.getMenu().getItem(3).getTitle());
+//							break;
+//						default:
+////							navigationView.getMenu().getItem(0).setChecked(true);
+////							setTitle(navigationView.getMenu().getItem(0).getTitle());
+//							break;
+//					}
+//				} else {
+//					navigationView.getMenu().getItem(0).setChecked(true);
+//					setTitle(navigationView.getMenu().getItem(0).getTitle());
+//				}
 
 			}
 		});

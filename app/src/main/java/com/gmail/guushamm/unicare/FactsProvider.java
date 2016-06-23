@@ -48,11 +48,10 @@ public class FactsProvider {
         factsList.addAll(Arrays.asList(facts));
     }
 
-    public String getRandomFact()
-    {
-        Random random = new Random();
-        int randomint = random.nextInt(factsList.size());
-        return factsList.get(randomint);
+	public String getRandomFact() {
+		Random random = new Random();
+		int randomint = random.nextInt(factsList.size());
+		return factsList.get(randomint);
 
-    }
+	}
 }

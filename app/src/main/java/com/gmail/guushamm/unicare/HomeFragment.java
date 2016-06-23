@@ -1,20 +1,23 @@
 package com.gmail.guushamm.unicare;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import me.everything.providers.android.calendar.Event;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Timer;
-import java.util.TimerTask;
-
-import me.everything.providers.android.calendar.Event;
+import java.util.*;
 
 /**
  * Created by Erwin on 26-5-2016.
@@ -37,6 +40,46 @@ public class HomeFragment extends Fragment {
 		FactsProvider factsProvider = new FactsProvider();
 		factsText.setText(factsProvider.getRandomFact());
 		QueueController.getInstance(view);
+
+		WebView webView =(WebView) view.findViewById(R.id.YoutubeView);
+
+		WebSettings webSettings = webView.getSettings();
+		webSettings.setJavaScriptEnabled(true);
+
+		List<String> videos = new ArrayList<>();
+
+		videos.add("https://www.youtube.com/embed/8v2mEg9Cpvs");
+		videos.add("https://www.youtube.com/embed/ye27aIJD6qg");
+		videos.add("https://www.youtube.com/embed/0pz5C1nIKqU#t=6s");
+
+		Random random = new Random();
+
+		webView.loadUrl(videos.get(random.nextInt(videos.size())));
+
+		final FragmentTransaction  fragmentTransaction= this.getActivity().getSupportFragmentManager().beginTransaction();
+
+		FrameLayout frameAfspraken = (FrameLayout) view.findViewById(R.id.frameAfspraken);
+
+		frameAfspraken.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				fragmentTransaction.addToBackStack("Mijn afspraak");
+				fragmentTransaction.replace(R.id.containerView, new MyAppointmentFragment()).commitAllowingStateLoss();
+			}
+		});
+
+
+		FrameLayout frameNews = (FrameLayout) view.findViewById(R.id.frameNews);
+
+		frameNews.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				String url = "http://www.nu.nl/gezondheid";
+				Intent i = new Intent(Intent.ACTION_VIEW,Uri.parse(url));
+				startActivity(i);
+			}
+		});
+
 		return view;
 	}
 
