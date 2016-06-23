@@ -30,6 +30,7 @@ import java.util.Map;
  */
 public class GPSTracker extends Service implements LocationListener {
     private final Context mContext;
+    private MainActivity mainActivity;
 
     // flag for GPS status
     boolean isGPSEnabled = false;
@@ -55,6 +56,14 @@ public class GPSTracker extends Service implements LocationListener {
     public GPSTracker(Context context) {
         this.mContext = context;
         getLocation();
+
+        mainActivity = null;
+    }
+
+    public GPSTracker(Context context, MainActivity mainActivity) {
+        this.mContext = context;
+        getLocation();
+        this.mainActivity = mainActivity;
     }
 
     public Location getLocation() {
@@ -246,21 +255,11 @@ public class GPSTracker extends Service implements LocationListener {
             e.printStackTrace();
         }
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
 
         Intent intent = new Intent(mContext, MainActivity.class);
         pendingIntent = PendingIntent.getActivity(mContext, 0, intent, 0);
 
-        locationManager.addProximityAlert(latLong.getLatitude(), latLong.getLongitude(), 100, -1, pendingIntent);
+        mainActivity.createActualAlert(locationManager, latLong, pendingIntent);
     }
 
 

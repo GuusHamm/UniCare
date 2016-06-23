@@ -1,9 +1,19 @@
 package com.gmail.guushamm.unicare;
 
 import android.Manifest;
+import android.app.AlarmManager;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.location.LocationManager;
+import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -11,6 +21,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.LoaderManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -22,6 +33,7 @@ import android.view.Window;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 
@@ -107,8 +119,29 @@ public class MainActivity extends FragmentActivity implements NavigationView.OnN
 		fragmentTransaction = fragmentManager.beginTransaction();
 		fragmentTransaction.replace(R.id.containerView, new HomeFragment()).commit();
 
-		NotificationController notificationController = new NotificationController(this);
-		notificationController.startAlarm();
+//		NotificationController notificationController = new NotificationController(this);
+//		notificationController.startAlarm();
+
+		startAlarm();
+
+		GPSTracker tracker = new GPSTracker(this, this);
+		tracker.createProxyAlert("De Run 4600, 5504 DB Veldhoven");
+	}
+
+	public void createActualAlert(LocationManager locationManager, LatLong latLong, PendingIntent pendingIntent) {
+
+		ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
+
+		if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+			System.out.println("Test in check");
+			return;
+		}
+		locationManager.addProximityAlert(latLong.getLatitude(), latLong.getLongitude(), 100, -1, pendingIntent);
+	}
+
+
+	public void startAlarm(){
+
 	}
 
 	@Override

@@ -52,14 +52,17 @@ public class NotificationController {
     }
 
     public void startAlarm(){
-        PendingIntent mAlarmSender = PendingIntent.getBroadcast(context, 0, new Intent(context, AlarmReceiver.class), 0);
 
+
+//        PendingIntent mAlarmSender = PendingIntent.getBroadcast(context, 1927, new Intent(context, AlarmReceiver.class), PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent mAlarmSender = PendingIntent.getActivity(context, 1234, new Intent(context, AlarmReceiver.class), 0);
         //Set the alarm to 10 seconds from now
         Calendar c = Calendar.getInstance();
-        c.add(Calendar.SECOND, 5);
+        c.add(Calendar.SECOND, 10);
         long firstTime = c.getTimeInMillis();
         // Schedule the alarm!
         AlarmManager am = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+
         am.set(AlarmManager.RTC_WAKEUP, firstTime, mAlarmSender);
     }
 }
