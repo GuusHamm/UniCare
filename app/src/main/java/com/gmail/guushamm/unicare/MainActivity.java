@@ -2,6 +2,7 @@ package com.gmail.guushamm.unicare;
 
 import android.Manifest;
 import android.app.PendingIntent;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
@@ -43,9 +44,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 	private CustomAddress destination;
 	private CustomAddress origin;
 	private boolean calendarPermission;
+	private ProgressDialog progressDialog;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		progressDialog = new ProgressDialog(MainActivity.this);
+		progressDialog.setMessage("Afspraken ophalen");
+		progressDialog.setIndeterminate(false);
+		progressDialog.setCancelable(true);
+		progressDialog.show();
 		super.onCreate(savedInstanceState);
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_main);
@@ -321,6 +328,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //				}
 //			}
 		}
+		progressDialog.dismiss();
 	}
 
 	public List<Event> getCalendarEventList() {
@@ -331,6 +339,4 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 		GPSTracker gpsTracker = new GPSTracker(this);
 		gpsTracker.createProxyAlert("");
 	}
-
-
 }

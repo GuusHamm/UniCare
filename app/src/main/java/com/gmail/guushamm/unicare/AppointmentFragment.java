@@ -44,6 +44,7 @@ public class AppointmentFragment extends Fragment {
 		View view = inflater.inflate(R.layout.appointment_layout, null);
 		postsList = (ListView) view.findViewById(R.id.appointmentList);
 		events = new ArrayList<Event>();
+		events = ((MainActivity) getActivity()).getCalendarEventList();
 
 		// Button to add appointment
 		FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.add_appointment);
@@ -119,6 +120,14 @@ public class AppointmentFragment extends Fragment {
 							.putExtra(CalendarContract.Events.AVAILABILITY, CalendarContract.Events.AVAILABILITY_BUSY);
 					startActivity(intent);
 
+					Event newEvent = new Event();
+					newEvent.dTStart = beginTime.getTimeInMillis();
+					newEvent.dTend = endTime.getTimeInMillis();
+					newEvent.title = title;
+					newEvent.eventLocation = customAddress.toString();
+					newEvent.availability = CalendarContract.Events.AVAILABILITY_BUSY;
+					events.add(newEvent);
+
 				} catch (Exception e) {
 					Toast toast = Toast.makeText(getActivity(), "Wooow That QR code is not in a valid format", Toast.LENGTH_SHORT);
 					toast.show();
@@ -135,7 +144,6 @@ public class AppointmentFragment extends Fragment {
 	private void createAdapter() {
 		// Make sure this fragment is still a part of the activity.
 		if (getActivity() == null) return;
-		events = ((MainActivity) getActivity()).getCalendarEventList();
 
 		adapter = new ArrayAdapter<Event>(getActivity()
 				, R.layout.appointment_item
