@@ -90,7 +90,7 @@ public class HomeFragment extends Fragment {
 		});
 
 		FrameLayout frameLayout = (FrameLayout) view.findViewById(R.id.frameEnquete);
-		frameNews.setOnClickListener(new View.OnClickListener() {
+		frameLayout.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				String url = "http://www.st-anna.nl/uw-mening.html";
